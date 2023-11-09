@@ -8,7 +8,7 @@ def main():
         {
             "weights": emptyAI.weights,
             "biases": emptyAI.biases,
-            "index": 0
+            "index": 1
         },
         file
     )

@@ -3,11 +3,14 @@ import math as m
 
 def sigmoid(x):
     if x > 0:
+        if x > 700:
+            return 1
         exp = m.exp(x)
         return exp / (1 + exp)
+    if x < -700:
+        return 0
     return 1 / (1 + m.exp(-x))
-
-
+    
 class NeuralNetwork:
     def __init__(self, structure):
         self.structure = np.array(structure)
@@ -22,7 +25,7 @@ class NeuralNetwork:
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
 
         self.weights_gradient = [np.zeros((self.structure[i + 1], self.structure[i])) for i in range(self.layers)]
-        self.biases_gradinet = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
+        self.biases_gradient = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
 
 
 

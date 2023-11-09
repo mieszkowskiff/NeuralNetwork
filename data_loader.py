@@ -9,7 +9,6 @@ def read_data(start_index, filename = "./train.csv"):
         data = np.array(lines[i][1:], dtype = np.int64).reshape((28,28))
         answer = np.zeros((10,1))
         answer[int(lines[i][0])][0] = 1
-        yield answer, data
-
+        yield data, answer
 
     

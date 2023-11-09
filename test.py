@@ -1,5 +1,19 @@
+from neural_network import NeuralNetwork
 import numpy as np
+import data_loader
+import pickle
 
-x = np.array([[1],[2],[4],[5]])
 
-print(x * 2)
+AI = NeuralNetwork([784, 16, 16, 10])
+file = open("state", "rb")
+data = pickle.load(file)
+file.close()
+AI.weights = data["weights"]
+AI.biases = data["biases"]
+
+cost = 0
+for data in data_loader.read_data(1):
+    digit, answer = data
+    cost += AI.calculate_cost(digit.reshape((784, 1)), answer)
+
+print(cost)
