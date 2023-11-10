@@ -4,7 +4,7 @@ import data_loader
 import pickle
 
 def main():
-    AI = NeuralNetwork([784, 16, 16, 10])
+    AI = NeuralNetwork([784, 128, 128, 10])
     batch_size = 8
     file = open("state", "rb")
     data = pickle.load(file)

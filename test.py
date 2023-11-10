@@ -4,7 +4,7 @@ import data_loader
 import pickle
 
 
-AI = NeuralNetwork([784, 16, 16, 10])
+AI = NeuralNetwork([784, 128, 128, 10])
 file = open("state", "rb")
 data = pickle.load(file)
 file.close()
@@ -17,3 +17,4 @@ for data in data_loader.read_data(1):
     cost += AI.calculate_cost(digit.reshape((784, 1)), answer)
 
 print(cost)
+#37859.550295630754

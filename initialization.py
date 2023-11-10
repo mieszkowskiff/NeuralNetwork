@@ -2,7 +2,7 @@ from neural_network import NeuralNetwork
 import pickle
 
 def main():
-    emptyAI = NeuralNetwork([784, 16, 16, 10])
+    emptyAI = NeuralNetwork([784, 128, 128, 10])
     file = open('state', 'wb')
     pickle.dump(
         {
