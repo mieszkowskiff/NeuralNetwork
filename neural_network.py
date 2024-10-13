@@ -1,5 +1,6 @@
 import numpy as np
 import math as m
+import copy
 
 def sigmoid(x):
     if x > 0:
@@ -10,6 +11,8 @@ def sigmoid(x):
     if x < -700:
         return 0
     return 1 / (1 + m.exp(-x))
+
+
     
 class NeuralNetwork:
     def __init__(self, structure):
@@ -42,7 +45,7 @@ class NeuralNetwork:
     def __call__(self, input):
         self.assure_input(input)
 
-        data = input
+        data = copy.copy(input)
         for i in range(self.layers):
             data = self.activation(np.matmul(self.weights[i], data) + self.biases[i])
         return data
@@ -55,7 +58,7 @@ class NeuralNetwork:
 
 
     def calculate_neurons(self, input):
-        self.neurons[0] = input
+        self.neurons[0] = copy.copy(input)
         for i in range(self.layers):
             self.neurons[i + 1] = self.activation(np.matmul(self.weights[i], self.neurons[i]) + self.biases[i])
 
