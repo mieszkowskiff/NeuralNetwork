@@ -85,15 +85,13 @@ class NeuralNetwork:
         self.calculate_neurons(input)
         self.calculate_chain(input, output)
 
-        for layer in range(self.layers):
-            for i in range(self.structure[layer + 1]):
-                for j in range(self.structure[layer]):
-                    weights_gradient[layer][i][j] = self.chain[layer][i][0] * self.neurons[layer][j][0]
-                biases_gradient[layer][i][0] = self.chain[layer][i][0]
+        weights_gradient[0] = np.matmul(self.chain[0], self.activation(input).T)
+        biases_gradient[0] = self.chain[0]
+        for i in range(1, self.layers):
+            weights_gradient[i] = np.matmul(self.chain[i], self.activation(self.neurons[i - 1]).T)
+            biases_gradient[i] = self.chain[i]
         
-        for layer in range(self.layers):
-            self.weights_gradient[layer] += weights_gradient[layer]
-            self.biases_gradient[layer] += biases_gradient[layer]
+        return weights_gradient, biases_gradient
 
 
     def end_batch(self, learn_rate = 1):
