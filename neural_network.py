@@ -28,7 +28,7 @@ class NeuralNetwork:
         self.activation = np.vectorize(sigmoid)
         self.activation_derivative = np.vectorize(sigmoid_derivative)
 
-        self.neurons = [np.random.rand(self.structure[i],1) for i in range(self.layers + 1)]
+        self.neurons = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
 
         self.weights_gradient = [np.zeros((self.structure[i + 1], self.structure[i])) for i in range(self.layers)]
@@ -62,9 +62,10 @@ class NeuralNetwork:
 
 
     def calculate_neurons(self, input):
-        self.neurons[0] = copy.deepcopy(input)
-        for i in range(self.layers):
-            self.neurons[i + 1] = np.matmul(self.weights[i], self.activation(self.neurons[i])) + self.biases[i]
+        self.assure_input(input)
+        self.neurons[0] = np.matmul(self.weights[0], self.activation(copy.deepcopy(input))) + self.biases[0]
+        for i in range(1, self.layers):
+            self.neurons[i] = np.matmul(self.weights[i], self.activation(self.neurons[i - 1])) + self.biases[i]
 
     
     def calculate_chain(self, input, output):
@@ -101,7 +102,12 @@ class NeuralNetwork:
 
 
 
-
+if __name__ == "__main__":
+    np.random.seed(123)
+    nn = NeuralNetwork([2, 3, 1])
+    nn.calculate_neurons(np.array([[1], [1]]))
+    print(nn.neurons)
+    
     
     
 
