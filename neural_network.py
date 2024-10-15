@@ -13,6 +13,9 @@ def sigmoid(x):
     return 1 / (1 + m.exp(-x))
 
 
+def sigmoid_derivative(x):
+    return sigmoid(x) * (1 - sigmoid(x))
+
     
 class NeuralNetwork:
     def __init__(self, structure):
@@ -23,6 +26,7 @@ class NeuralNetwork:
         self.biases = [np.random.rand(self.structure[i + 1], 1) for i in range(self.layers)]
 
         self.activation = np.vectorize(sigmoid)
+        self.activation_derivative = np.vectorize(sigmoid_derivative)
 
         self.neurons = [np.random.rand(self.structure[i],1) for i in range(self.layers + 1)]
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
@@ -45,7 +49,7 @@ class NeuralNetwork:
     def __call__(self, input):
         self.assure_input(input)
 
-        data = copy.copy(input)
+        data = copy.deepcopy(input)
         for i in range(self.layers):
             data = self.activation(np.matmul(self.weights[i], data) + self.biases[i])
         return data
@@ -58,19 +62,13 @@ class NeuralNetwork:
 
 
     def calculate_neurons(self, input):
-        self.neurons[0] = copy.copy(input)
+        self.neurons[0] = copy.deepcopy(input)
         for i in range(self.layers):
-            self.neurons[i + 1] = self.activation(np.matmul(self.weights[i], self.neurons[i]) + self.biases[i])
+            self.neurons[i + 1] = np.matmul(self.weights[i], self.activation(self.neurons[i])) + self.biases[i]
 
     
     def calculate_chain(self, input, output):
-        for i in range(self.structure[-1]):
-            self.chain[-1][i][0] = self.neurons[-1][i][0] * (1 - self.neurons[-1][i][0]) * 2 * (self.neurons[-1][i][0] - output[i][0])
-            
-        for layer in range(self.layers - 2, -1, -1):
-            for i in range(self.structure[layer + 1]):
-                self.chain[layer][i][0] = self.neurons[layer + 1][i] * (1 - self.neurons[layer + 1][i]) * sum(self.chain[layer + 1][j][0] * self.weights[layer + 1][j][i] for j in range(self.structure[layer + 2]))
-
+        pass
     
     def calculate_gradient(self, input, output):
         self.assure_input(input)
