@@ -69,7 +69,11 @@ class NeuralNetwork:
 
     
     def calculate_chain(self, input, output):
-        pass
+        self.calculate_neurons(input)
+        self.assure_output(output)
+        self.chain[-1] = 2 * (self.activation(self.neurons[-1]) - output) * self.activation_derivative(self.neurons[-1])
+        for i in range(self.layers - 2, -1, -1):
+            self.chain[i] = np.matmul(self.weights[i + 1].T, self.chain[i + 1]) * self.activation_derivative(self.neurons[i])
     
     def calculate_gradient(self, input, output):
         self.assure_input(input)
@@ -103,10 +107,7 @@ class NeuralNetwork:
 
 
 if __name__ == "__main__":
-    np.random.seed(123)
-    nn = NeuralNetwork([2, 3, 1])
-    nn.calculate_neurons(np.array([[1], [1]]))
-    print(nn.neurons)
+    print(np.array([1, 2, 3]) * np.array([1, 2, 3]))
     
     
     
