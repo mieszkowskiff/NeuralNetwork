@@ -105,9 +105,14 @@ class NeuralNetwork:
 
 
 if __name__ == "__main__":
-    print(np.array([1, 2, 3]) * np.array([1, 2, 3]))
+    np.random.seed(0)
+    nn = NeuralNetwork([2, 2, 1])
     
-    
+    nn.weights = [np.array([[2, 2], [1, 1]]), np.array([[-2, 1]])]
+    nn.biases = [np.array([[-3], [0]]), np.array([[0]])]
+
+    print(nn(np.array([[0], [0]])))
+
     
 
     
