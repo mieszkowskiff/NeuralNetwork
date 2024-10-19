@@ -3,14 +3,7 @@ import math as m
 import copy
 
 def sigmoid(x):
-    if x > 0:
-        if x > 700:
-            return 1
-        exp = m.exp(x)
-        return exp / (1 + exp)
-    if x < -700:
-        return 0
-    return 1 / (1 + m.exp(-x))
+    return 1 / (1 + np.exp(-x))
 
 
 def sigmoid_derivative(x):
@@ -25,8 +18,8 @@ class NeuralNetwork:
         self.weights = [np.random.rand(self.structure[i + 1], self.structure[i]) for i in range(self.layers)]
         self.biases = [np.random.rand(self.structure[i + 1], 1) for i in range(self.layers)]
 
-        self.activation = np.vectorize(sigmoid)
-        self.activation_derivative = np.vectorize(sigmoid_derivative)
+        self.activation = sigmoid
+        self.activation_derivative = sigmoid_derivative
 
         self.neurons = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
@@ -108,10 +101,23 @@ if __name__ == "__main__":
     np.random.seed(0)
     nn = NeuralNetwork([2, 2, 1])
     
-    nn.weights = [np.array([[2, 2], [1, 1]]), np.array([[-2, 1]])]
-    nn.biases = [np.array([[-3], [0]]), np.array([[0]])]
+    dataset = [
+        (np.array([[0], [0]]), np.array([[0]])),
+        (np.array([[0], [1]]), np.array([[1]])),
+        (np.array([[1], [0]]), np.array([[1]])),
+        (np.array([[1], [1]]), np.array([[0]]))
+    ]
 
-    print(nn(np.array([[0], [0]])))
+    for epoch in range(100000):
+        for input, output in dataset:
+            nn.calculate_gradient(input, output)
+        nn.end_batch(0.1)
+        if epoch % 1000 == 0:
+            print(f'Epoch {epoch}, Loss: {nn.calculate_cost(input, output)}')
+    for input, output in dataset:
+        print(nn(input))
+
+
 
     
 

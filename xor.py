@@ -19,11 +19,11 @@ class NeuralNetwork:
 
     def feedforward(self, X):
         # Warstwa ukryta
-        self.hidden_input = np.dot(X, self.weights_input_hidden) + self.bias_hidden
+        self.hidden_input = np.matmul(X, self.weights_input_hidden) + self.bias_hidden
         self.hidden_output = sigmoid(self.hidden_input)
         
         # Warstwa wyjściowa
-        self.final_input = np.dot(self.hidden_output, self.weights_hidden_output) + self.bias_output
+        self.final_input = np.matmul(self.hidden_output, self.weights_hidden_output) + self.bias_output
         self.final_output = sigmoid(self.final_input)
         
         return self.final_output
@@ -54,6 +54,8 @@ class NeuralNetwork:
     def predict(self, X):
         return self.feedforward(X)
 
+
+np.random.seed(0)
 # Zbiór danych dla bramki XOR
 X = np.array([[0, 0],
               [0, 1],
