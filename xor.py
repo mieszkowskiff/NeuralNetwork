@@ -1,6 +1,6 @@
 import numpy as np
 import neural_network
-
+from icecream import ic
 # Funkcje aktywacji
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))

@@ -1,5 +1,6 @@
 import numpy as np
 import copy
+from icecream import ic
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
