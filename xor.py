@@ -1,4 +1,5 @@
 import numpy as np
+import neural_network
 
 # Funkcje aktywacji
 def sigmoid(x):
@@ -66,12 +67,24 @@ y = np.array([[0],
               [0]])
 
 # Inicjalizacja sieci neuronowej
-nn = NeuralNetwork(input_size=2, hidden_size=2, output_size=1)
 
-# Trenowanie sieci
-nn.train(X, y, epochs=10000, learning_rate=0.1)
+np.random.seed(42)
+weights_input_hidden = np.random.rand(2, 2)
+weights_hidden_output = np.random.rand(2, 1)
+bias_hidden = np.random.rand(2)
+bias_output = np.random.rand(1)
 
-# Testowanie sieci
-for input_data in X:
-    prediction = nn.predict(input_data)
-    print(f"Input: {input_data}, Predicted Output: {prediction}")
+nn1 = NeuralNetwork(input_size=2, hidden_size=2, output_size=1)
+nn2 = neural_network.NeuralNetwork([2, 2, 1])
+
+nn1.weights_input_hidden = weights_input_hidden
+nn1.weights_hidden_output = weights_hidden_output
+nn1.bias_hidden = bias_hidden
+nn1.bias_output = bias_output
+
+nn2.weights = [weights_input_hidden.T, weights_hidden_output.T]
+nn2.biases = [bias_hidden.T, bias_output.T]
+
+print(nn1.predict(X[1]))
+print(nn2(X[1].T))
+

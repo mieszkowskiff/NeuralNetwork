@@ -1,16 +1,8 @@
 import numpy as np
-import math as m
 import copy
 
 def sigmoid(x):
-    if x > 0:
-        if x > 700:
-            return 1
-        exp = m.exp(x)
-        return exp / (1 + exp)
-    if x < -700:
-        return 0
-    return 1 / (1 + m.exp(-x))
+    return 1 / (1 + np.exp(-x))
 
 
 def sigmoid_derivative(x):
