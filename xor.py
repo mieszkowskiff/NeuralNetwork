@@ -55,24 +55,15 @@ class NeuralNetwork:
     def predict(self, X):
         return self.feedforward(X)
 
-# Zbiór danych dla bramki XOR
-X = np.array([[0, 0],
-              [0, 1],
-              [1, 0],
-              [1, 1]])
 
-y = np.array([[0], 
-              [1], 
-              [1], 
-              [0]])
 
 # Inicjalizacja sieci neuronowej
 
 np.random.seed(42)
 weights_input_hidden = np.random.rand(2, 2)
 weights_hidden_output = np.random.rand(2, 1)
-bias_hidden = np.random.rand(2)
-bias_output = np.random.rand(1)
+bias_hidden = np.random.rand(1, 2)
+bias_output = np.random.rand(1, 1)
 
 nn1 = NeuralNetwork(input_size=2, hidden_size=2, output_size=1)
 nn2 = neural_network.NeuralNetwork([2, 2, 1])
@@ -85,6 +76,6 @@ nn1.bias_output = bias_output
 nn2.weights = [weights_input_hidden.T, weights_hidden_output.T]
 nn2.biases = [bias_hidden.T, bias_output.T]
 
-print(nn1.predict(X[1]))
-print(nn2(X[1].T))
+print(nn1.predict(np.array([[0, 0]])))
+print(nn2(np.array([[0], [0]])))
 
