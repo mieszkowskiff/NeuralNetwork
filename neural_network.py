@@ -51,7 +51,7 @@ class NeuralNetwork:
 
     def forward(self, input):
         self.assure_input(input)
-        self.neurons[0] = np.matmul(self.weights[0], self.activation(input)) + self.biases[0]
+        self.neurons[0] = np.matmul(self.weights[0], input) + self.biases[0]
         for i in range(1, self.layers):
             self.neurons[i] = np.matmul(self.weights[i], self.activation(self.neurons[i - 1])) + self.biases[i]
         return self.activation(self.neurons[-1])
@@ -60,7 +60,7 @@ class NeuralNetwork:
     def calculate_chain(self, input, output):
         self.forward(input)
         self.assure_output(output)
-        self.chain[-1] = 2 * (self.activation(self.neurons[-1]) - output) * self.activation_derivative(self.neurons[-1])
+        self.chain[-1] = (self.activation(self.neurons[-1]) - output) * self.activation_derivative(self.neurons[-1])
         for i in range(self.layers - 2, -1, -1):
             self.chain[i] = np.matmul(self.weights[i + 1].T, self.chain[i + 1]) * self.activation_derivative(self.neurons[i])
     
@@ -73,12 +73,13 @@ class NeuralNetwork:
 
         self.calculate_chain(input, output)
 
-        weights_gradient[0] = np.matmul(self.chain[0], self.activation(input).T)
+        weights_gradient[0] = np.matmul(self.chain[0], input.T)
         biases_gradient[0] = self.chain[0]
         for i in range(1, self.layers):
             weights_gradient[i] = np.matmul(self.chain[i], self.activation(self.neurons[i - 1]).T)
             biases_gradient[i] = self.chain[i]
-        
+
+
         for i in range(self.layers):
             self.weights[i] -= weights_gradient[i] * learning_rate
             self.biases[i] -= biases_gradient[i] * learning_rate

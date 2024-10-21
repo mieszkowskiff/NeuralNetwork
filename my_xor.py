@@ -1,8 +1,11 @@
 import numpy as np
 from icecream import ic
+from neural_network import NeuralNetwork
+import copy
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
+
 
 def sigmoid_derivative(x):
     return sigmoid(x) * (1 - sigmoid(x))
@@ -25,40 +28,52 @@ class Net:
         return self.a2
     
     def backward(self, x, y, learning_rate):
-        d_a2 = 2 * (y - self.a2)
-        d_z2 = d_a2 * sigmoid_derivative(self.z2)
-        d_weights2 = np.matmul(d_z2, self.a1.T)
-        d_bias2 = d_z2
+        d_a2 = self.a2 - y
+        self.d_z2 = d_a2 * sigmoid_derivative(self.z2)
+        d_weights2 = np.matmul(self.d_z2, self.a1.T)
+        d_bias2 = self.d_z2
 
-        d_a1 = np.matmul(self.weights2.T, d_z2)
-        d_z1 = d_a1 * sigmoid_derivative(self.z1)
+        d_a1 = np.matmul(self.weights2.T, self.d_z2)
+        self.d_z1 = d_a1 * sigmoid_derivative(self.z1)
 
-        d_weights1 = np.matmul(d_z1, x.T)
-        d_bias1 = d_z1
+        d_weights1 = np.matmul(self.d_z1, x.T)
+        d_bias1 = self.d_z1
 
-        self.weights1 += d_weights1 * learning_rate
-        self.bias1 += d_bias1 * learning_rate
+        self.weights1 -= d_weights1 * learning_rate
+        self.bias1 -= d_bias1 * learning_rate
 
-        self.weights2 += d_weights2 * learning_rate
-        self.bias2 += d_bias2 * learning_rate
+        self.weights2 -= d_weights2 * learning_rate
+        self.bias2 -= d_bias2 * learning_rate
        
     
 np.random.seed(0)
 net = Net()
+net2 = NeuralNetwork([2, 2, 1])
+
+weights1 = np.array([[0.15, 0.2], [0.25, 0.3]])
+bias1 = np.array([[0.35], [0.35]])
+weights2 = np.array([[0.4, 0.45]])
+bias2 = np.array([[0.6]])
+
+net.weights1 = weights1
+net.bias1 = bias1
+net.weights2 = weights2
+net.bias2 = bias2
+
+net2.weights = copy.deepcopy([weights1, weights2])
+net2.biases = copy.deepcopy([bias1, bias2])
+
+
+
 x = np.array([[[0], [0]], [[1], [0]], [[0], [1]], [[1], [1]]])
 y = np.array([[0], [1], [1], [0]])
 
-for i in range(10000):
-    for j in range(4):
-        net.forward(x[j])
-        net.backward(x[j], y[j], 0.1)
 
-print(net.forward(x[0]))
-print(net.forward(x[1]))
-print(net.forward(x[2]))
-print(net.forward(x[3]))
-        
+net.forward(x[0])
 
 
+net.backward(x[0], y[0], 0.5)
+net2.backward(x[0], y[0], 0.5)
 
-    
+# tutaj są identyczne
+
