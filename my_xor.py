@@ -25,7 +25,7 @@ class Net:
         return self.a2
     
     def backward(self, x, y, learning_rate):
-        d_a2 = 2 * (y - self.a2)
+        d_a2 = self.a2 - y
         d_z2 = d_a2 * sigmoid_derivative(self.z2)
         d_weights2 = np.matmul(d_z2, self.a1.T)
         d_bias2 = d_z2
@@ -36,11 +36,11 @@ class Net:
         d_weights1 = np.matmul(d_z1, x.T)
         d_bias1 = d_z1
 
-        self.weights1 += d_weights1 * learning_rate
-        self.bias1 += d_bias1 * learning_rate
+        self.weights1 -= d_weights1 * learning_rate
+        self.bias1 -= d_bias1 * learning_rate
 
-        self.weights2 += d_weights2 * learning_rate
-        self.bias2 += d_bias2 * learning_rate
+        self.weights2 -= d_weights2 * learning_rate
+        self.bias2 -= d_bias2 * learning_rate
        
     
 np.random.seed(0)
