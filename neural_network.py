@@ -90,13 +90,18 @@ class NeuralNetwork:
 
 
 if __name__ == "__main__":
-    np.random.seed(0)
-    nn = NeuralNetwork([2, 2, 1])
-    
-    nn.weights = [np.array([[2, 2], [1, 1]]), np.array([[-2, 1]])]
-    nn.biases = [np.array([[-3], [0]]), np.array([[0]])]
+    np.random.seed(89)
+    net = NeuralNetwork([2, 2, 1])
 
-    print(nn(np.array([[0], [0]])))
+    x = np.array([[[0], [0]], [[1], [0]], [[0], [1]], [[1], [1]]])
+    y = np.array([[0], [1], [1], [0]])
+
+    for i in range(10000):
+        for j in range(4):
+            net.backward(x[j], y[j])
+
+    for i in range(4):
+        ic(net(x[i]))
 
     
 

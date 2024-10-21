@@ -51,24 +51,16 @@ def assert_equal(net1, net2):
     assert np.allclose(net1.bias2, net2.biases[1])
 
 
-np.random.seed(0)
+np.random.seed(45)
 
-weights1 = np.array([[0.15, 0.2], [0.25, 0.3]])
-bias1 = np.array([[0.35], [0.35]])
-weights2 = np.array([[0.4, 0.45]])
-bias2 = np.array([[0.6]])
 
 net = Net()
 net2 = NeuralNetwork([2, 2, 1])
 
-net.weights1 = weights1
-net.bias1 = bias1
-net.weights2 = weights2
-net.bias2 = bias2
 
 
-net2.weights = copy.deepcopy([weights1, weights2])
-net2.biases = copy.deepcopy([bias1, bias2])
+#net2.weights = copy.deepcopy([net.weights1, net.weights2])
+#net2.biases = copy.deepcopy([net.bias1, net.bias2])
 
 
 
@@ -81,5 +73,13 @@ for i in range(10000):
 
 for j in range(4):
     ic(net2(x[j]))
+
+for i in range(10000):
+    for j in range(4):
+        net.forward(x[j])
+        net.backward(x[j], y[j], 0.5)
+
+for j in range(4):
+    ic(net.forward(x[j]))
 
     
