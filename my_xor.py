@@ -44,7 +44,13 @@ class Net:
         self.weights2 -= d_weights2 * learning_rate
         self.bias2 -= d_bias2 * learning_rate
        
-    
+def assert_equal(net1, net2):
+    assert np.allclose(net1.weights1, net2.weights[0])
+    assert np.allclose(net1.bias1, net2.biases[0])
+    assert np.allclose(net1.weights2, net2.weights[1])
+    assert np.allclose(net1.bias2, net2.biases[1])
+
+
 np.random.seed(0)
 
 weights1 = np.array([[0.15, 0.2], [0.25, 0.3]])
@@ -69,10 +75,11 @@ net2.biases = copy.deepcopy([bias1, bias2])
 x = np.array([[[0], [0]], [[1], [0]], [[0], [1]], [[1], [1]]])
 y = np.array([[0], [1], [1], [0]])
 
-net.forward(x[0])
-net.backward(x[0], y[0], 0.5)
-net2.backward(x[0], y[0], 0.5) 
+for i in range(10000):
+    for j in range(4):
+        net2.backward(x[j], y[j], 0.5)
 
-
+for j in range(4):
+    ic(net2(x[j]))
 
     
