@@ -1,5 +1,7 @@
 import numpy as np
 from icecream import ic
+import copy
+from neural_network import NeuralNetwork
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -44,20 +46,32 @@ class Net:
        
     
 np.random.seed(0)
+
+weights1 = np.array([[0.15, 0.2], [0.25, 0.3]])
+bias1 = np.array([[0.35], [0.35]])
+weights2 = np.array([[0.4, 0.45]])
+bias2 = np.array([[0.6]])
+
 net = Net()
+net2 = NeuralNetwork([2, 2, 1])
+
+net.weights1 = weights1
+net.bias1 = bias1
+net.weights2 = weights2
+net.bias2 = bias2
+
+
+net2.weights = copy.deepcopy([weights1, weights2])
+net2.biases = copy.deepcopy([bias1, bias2])
+
+
+
 x = np.array([[[0], [0]], [[1], [0]], [[0], [1]], [[1], [1]]])
 y = np.array([[0], [1], [1], [0]])
 
-for i in range(10000):
-    for j in range(4):
-        net.forward(x[j])
-        net.backward(x[j], y[j], 0.1)
-
-print(net.forward(x[0]))
-print(net.forward(x[1]))
-print(net.forward(x[2]))
-print(net.forward(x[3]))
-        
+net.forward(x[0])
+net.backward(x[0], y[0], 0.5)
+net2.backward(x[0], y[0], 0.5) 
 
 
 
