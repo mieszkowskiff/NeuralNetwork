@@ -1,6 +1,6 @@
 import numpy as np
-import math as m
 import copy
+from icecream import ic
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -9,7 +9,7 @@ def sigmoid(x):
 def sigmoid_derivative(x):
     return sigmoid(x) * (1 - sigmoid(x))
 
-    
+
 class NeuralNetwork:
     def __init__(self, structure):
         self.structure = np.array(structure)
@@ -47,28 +47,24 @@ class NeuralNetwork:
             data = self.activation(np.matmul(self.weights[i], data) + self.biases[i])
         return data
 
-    def calculate_cost(self, input, output):
+
+
+    def forward(self, input):
         self.assure_input(input)
-        self.assure_output(output)
-
-        return sum((self(input) - output)**2)[0]
-
-
-    def calculate_neurons(self, input):
-        self.assure_input(input)
-        self.neurons[0] = np.matmul(self.weights[0], self.activation(copy.deepcopy(input))) + self.biases[0]
+        self.neurons[0] = np.matmul(self.weights[0], input) + self.biases[0]
         for i in range(1, self.layers):
             self.neurons[i] = np.matmul(self.weights[i], self.activation(self.neurons[i - 1])) + self.biases[i]
+        return self.activation(self.neurons[-1])
 
     
     def calculate_chain(self, input, output):
-        self.calculate_neurons(input)
+        self.forward(input)
         self.assure_output(output)
-        self.chain[-1] = 2 * (self.activation(self.neurons[-1]) - output) * self.activation_derivative(self.neurons[-1])
+        self.chain[-1] = (self.activation(self.neurons[-1]) - output) * self.activation_derivative(self.neurons[-1])
         for i in range(self.layers - 2, -1, -1):
             self.chain[i] = np.matmul(self.weights[i + 1].T, self.chain[i + 1]) * self.activation_derivative(self.neurons[i])
     
-    def calculate_gradient(self, input, output):
+    def backward(self, input, output, learning_rate = 0.1):
         self.assure_input(input)
         self.assure_output(output)
 
@@ -77,47 +73,35 @@ class NeuralNetwork:
 
         self.calculate_chain(input, output)
 
-        weights_gradient[0] = np.matmul(self.chain[0], self.activation(input).T)
+        weights_gradient[0] = np.matmul(self.chain[0], input.T)
         biases_gradient[0] = self.chain[0]
         for i in range(1, self.layers):
             weights_gradient[i] = np.matmul(self.chain[i], self.activation(self.neurons[i - 1]).T)
             biases_gradient[i] = self.chain[i]
-        
+
+
         for i in range(self.layers):
-            self.weights_gradient[i] += weights_gradient[i]
-            self.biases_gradient[i] += biases_gradient[i]
+            self.weights[i] -= weights_gradient[i] * learning_rate
+            self.biases[i] -= biases_gradient[i] * learning_rate
 
-    def end_batch(self, learn_rate = 1):
-        for layer in range(self.layers):
-            self.weights[layer] += self.weights_gradient[layer] * learn_rate * -1
-            self.biases[layer] += self.biases_gradient[layer] * learn_rate * -1
 
-        self.weights_gradient = [np.zeros((self.structure[i + 1], self.structure[i])) for i in range(self.layers)]
-        self.biases_gradinet = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
+
 
 
 
 if __name__ == "__main__":
-    np.random.seed(0)
-    nn = NeuralNetwork([2, 2, 1])
-    
-    dataset = [
-        (np.array([[0], [0]]), np.array([[0]])),
-        (np.array([[0], [1]]), np.array([[1]])),
-        (np.array([[1], [0]]), np.array([[1]])),
-        (np.array([[1], [1]]), np.array([[0]]))
-    ]
+    np.random.seed(89)
+    net = NeuralNetwork([2, 2, 1])
 
-    for epoch in range(100000):
-        for input, output in dataset:
-            nn.calculate_gradient(input, output)
-        nn.end_batch(0.1)
-        if epoch % 1000 == 0:
-            print(f'Epoch {epoch}, Loss: {nn.calculate_cost(input, output)}')
-    for input, output in dataset:
-        print(nn(input))
+    x = np.array([[[0], [0]], [[1], [0]], [[0], [1]], [[1], [1]]])
+    y = np.array([[0], [1], [1], [0]])
 
+    for i in range(10000):
+        for j in range(4):
+            net.backward(x[j], y[j])
 
+    for i in range(4):
+        ic(net(x[i]))
 
     
 
