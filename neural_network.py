@@ -27,6 +27,8 @@ class NeuralNetwork:
         self.weights_gradient = [np.zeros((self.structure[i + 1], self.structure[i])) for i in range(self.layers)]
         self.biases_gradient = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
 
+        self.batch_size = 0
+
 
 
     def assure_input(self, input):
@@ -40,7 +42,7 @@ class NeuralNetwork:
 
 
     def __call__(self, input):
-        self.assure_input(input)
+        #self.assure_input(input)
 
         data = copy.deepcopy(input)
         for i in range(self.layers):
@@ -50,7 +52,7 @@ class NeuralNetwork:
 
 
     def forward(self, input):
-        self.assure_input(input)
+        #self.assure_input(input)
         self.neurons[0] = np.matmul(self.weights[0], input) + self.biases[0]
         for i in range(1, self.layers):
             self.neurons[i] = np.matmul(self.weights[i], self.activation(self.neurons[i - 1])) + self.biases[i]
@@ -64,25 +66,28 @@ class NeuralNetwork:
         for i in range(self.layers - 2, -1, -1):
             self.chain[i] = np.matmul(self.weights[i + 1].T, self.chain[i + 1]) * self.activation_derivative(self.neurons[i])
     
-    def backward(self, input, output, learning_rate = 0.1):
+    def backward(self, input, output):
         self.assure_input(input)
         self.assure_output(output)
 
-        weights_gradient = [np.zeros((self.structure[i + 1], self.structure[i])) for i in range(self.layers)]
-        biases_gradient = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
-
         self.calculate_chain(input, output)
 
-        weights_gradient[0] = np.matmul(self.chain[0], input.T)
-        biases_gradient[0] = self.chain[0]
+        self.weights_gradient[0] = np.matmul(self.chain[0], input.T)
+        self.biases_gradient[0] = self.chain[0]
         for i in range(1, self.layers):
-            weights_gradient[i] = np.matmul(self.chain[i], self.activation(self.neurons[i - 1]).T)
-            biases_gradient[i] = self.chain[i]
+            self.weights_gradient[i] = np.matmul(self.chain[i], self.activation(self.neurons[i - 1]).T)
+            self.biases_gradient[i] = self.chain[i]
 
+        self.batch_size += 1
 
+    def end_batch(self, learning_rate = 1):
         for i in range(self.layers):
-            self.weights[i] -= weights_gradient[i] * learning_rate
-            self.biases[i] -= biases_gradient[i] * learning_rate
+            self.weights[i] -= self.weights_gradient[i] * learning_rate
+            self.biases[i] -= self.biases_gradient[i] * learning_rate
+        
+        self.weights_gradient = [np.zeros((self.structure[i + 1], self.structure[i])) for i in range(self.layers)]
+        self.biases_gradient = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
+        self.batch_size = 0
 
 
 
@@ -96,12 +101,12 @@ if __name__ == "__main__":
     x = np.array([[[0], [0]], [[1], [0]], [[0], [1]], [[1], [1]]])
     y = np.array([[0], [1], [1], [0]])
 
-    for i in range(10000):
-        for j in range(4):
-            net.backward(x[j], y[j])
+    for i in range(30000):
+        net.backward(x[i % 4], y[i % 4])
+        if i % 4 == 0: 
+            net.end_batch(1)
 
-    for i in range(4):
-        ic(net(x[i]))
+    print(net(x))
 
     
 
