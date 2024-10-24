@@ -15,7 +15,8 @@ if __name__ == "__main__":
     for j in range(1000):
         for i in range(100):
             nn.backward(np.array([[x[i]]]), np.array([[y[i]]]))
-            nn.end_batch(0.1)
+            if i % 10 == 0:
+                nn.end_batch(0.1)
     plt.scatter(x, nn(x.reshape(-1, 1, 1)))
     plt.savefig("plot.png")
     
