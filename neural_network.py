@@ -75,8 +75,8 @@ class NeuralNetwork:
         self.weights_gradient[0] = np.matmul(self.chain[0], input.T)
         self.biases_gradient[0] = self.chain[0]
         for i in range(1, self.layers):
-            self.weights_gradient[i] = np.matmul(self.chain[i], self.activation(self.neurons[i - 1]).T)
-            self.biases_gradient[i] = self.chain[i]
+            self.weights_gradient[i] += np.matmul(self.chain[i], self.activation(self.neurons[i - 1]).T)
+            self.biases_gradient[i] += self.chain[i]
 
         self.batch_size += 1
 
