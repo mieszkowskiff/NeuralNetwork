@@ -2,11 +2,19 @@ import neural_network
 import read_data
 import numpy as np
 import matplotlib.pyplot as plt
-import math
+
 
 if __name__ == "__main__":
-    X_train, Y_train = read_data.read_data("C:/Users/Staś/Desktop/home/SN/data/reg/data.activation.train.1000.csv")
-    X_test, Y_test = read_data.read_data("C:/Users/Staś/Desktop/home/SN/data/reg/data.activation.test.1000.csv")
+
+
+    tab2=np.array([[1./2], [1], [2]])
+    print(tab2)
+    print(neural_network.softmax(tab2))
+    print(sum(neural_network.softmax(tab2)))
+    print(neural_network.softmax_derivative(tab2))
+    
+    X_train, Y_train = read_data.read_data("./data/regression/data.activation.train.1000.csv")
+    X_test, Y_test = read_data.read_data(".data/regression/data.activation.test.1000.csv")
     
     # previous normalization [0,1]^2
     # min_x, max_x, min_y, max_y, X_train, Y_train = neural_network.data_normalization(X_train, Y_train)
@@ -31,13 +39,8 @@ if __name__ == "__main__":
 
     # comparison with wolfram alpha
     # test passed
-    '''
-    tab2=[1./2, 1, 2]
-    print(tab2)
-    print(neural_network.softmax(tab2))
-    print(sum(neural_network.softmax(tab2)))
-    print(neural_network.softmax_derivative(tab2))
-    '''
+    
+    
     #plt.scatter(X_train, Y_train)
     #plt.plot(X_train, Y_train, "-g", label="Train")
     '''

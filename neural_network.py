@@ -1,6 +1,5 @@
 import numpy as np
 import copy
-import math
 from icecream import ic
 import statistics as stat
 
@@ -18,27 +17,15 @@ def tanh(x):
 def tanh_derivative(x):
     return 1-pow(tanh(x), 2)
 
-def softmax(x):
-    n=len(x)
-    exp_x=[0.0 for k in range(n)]
-    exp_x=np.array(exp_x)
-    for i in range(n):
-        exp_x[i]=math.exp(x[i])
-    dom=sum(exp_x)
-    return exp_x/dom
+def softmax(x, T = 1):
+    return np.exp(x/T) / np.sum(np.exp(x/T))
 
 def softmax_derivative(x):
-    n=len(x)
-    f=softmax(x)
-    df=[[0 for j in range(n)] for k in range(n)]
-    for i in range(n):
-        df[i][i]=f[i]-pow(f[i], 2)
-    # derivative matrix for softmax is symmentrical
-    for i in range(n):
-        for j in range(i+1, n):
-            df[i][j]=-f[i]*f[j]
-            df[j][i]=-f[i]*f[j]
-    return df
+    temp = softmax(x)
+    m = -np.matmul(temp, temp.T)
+    np.fill_diagonal(m, temp * (1 - temp))
+    return m
+
 
 def SSE(x, y):
     return sum(pow(x-y,2))/pow(10, 5)
@@ -67,6 +54,22 @@ def data_normalization2(x, y):
     y = (y - mean_y) / (max_y - min_y)
     return min_x, max_x, min_y, max_y, mean_x, mean_y, x, y
 
+def classification_data_normalization(x, mean=None, std=None):
+    if mean is None:
+        mean = np.array([np.mean(x, axis=1)]).T
+    if std is None:
+        std = np.array([np.std(x, axis=1)]).T
+    return (x - mean) / std, mean, std
+
+def one_hot_encoding(y):
+    out = np.zeros((len(np.unique(y)), len(y)))
+    for i in range(len(y)):
+        out[int(y[i]), i] = 1
+    return out
+
+def one_hot_decoding(y):
+    return np.argmax(y, axis=0)
+
 def data_shuffle(x, y):
     permute = np.random.permutation(len(x))
     x = x[permute]
@@ -85,6 +88,8 @@ class NeuralNetwork:
         #self.activation_derivative = sigmoid_derivative
         self.activation = tanh
         self.activation_derivative = tanh_derivative
+        self.last_layer_activation = softmax
+        self.last_layer_activation_derivative = softmax_derivative
 
         self.neurons = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
@@ -120,6 +125,9 @@ class NeuralNetwork:
         for i in range(self.layers):
             data = self.activation(np.matmul(self.weights[i], data) + self.biases[i])
         return data
+    
+    def cost(self, input, output):
+        return SSE(self(input), output)
 
 
     def forward(self, input):
@@ -129,7 +137,7 @@ class NeuralNetwork:
             # self.neurons, list of lists, containing forward propagation values of each neuron before
             # activation function is applied 
             self.neurons[i] = np.matmul(self.weights[i], self.activation(self.neurons[i - 1])) + self.biases[i]
-        return self.activation(self.neurons[-1])
+        return self.last_layer_activation(self.neurons[-1])
 
     # variable output, from my understanding its NOT an output obtained from forward prop. for input.
     # These are labels, which, if Im correct, seem to have poor var. name   
@@ -140,7 +148,7 @@ class NeuralNetwork:
         self.assure_output(output)
         # SSE hardcoded here, cost function
         # still, math is correct in the line below
-        self.chain[-1] = (self.activation(self.neurons[-1]) - output) * self.activation_derivative(self.neurons[-1])
+        self.chain[-1] = np.matmul(self.last_layer_activation_derivative(self.neurons[-1]), (self.last_layer_activation(self.neurons[-1]) - output))
         for i in range(self.layers - 2, -1, -1):
             # math in this line also seems to be correct
             self.chain[i] = np.matmul(self.weights[i + 1].T, self.chain[i + 1]) * self.activation_derivative(self.neurons[i])
@@ -203,6 +211,16 @@ class NeuralNetwork:
                     self.end_batch()
         #print("Table of cost function values in every 10-th epoch")
         #print(cost_10th_epoch)
+
+
+    def perform_classification_training(self, X_train, Y_train):
+        for j in range(self.number_of_epochs):
+            print("Epoch #", j)
+            for i in range(len(X_train)):
+                self.backward(X_train[:,i:i+1], Y_train[:,i:i+1])
+                if (i % self.batch_size == 0) or (i==len(X_train)-1):
+                    self.end_batch()
+        
 
     
 
