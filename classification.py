@@ -20,7 +20,7 @@ if __name__ == "__main__":
     X_test, _, _ = neural_network.classification_data_normalization(X_test, mean, std)
     Y_train = neural_network.one_hot_encoding(Y_train)
 
-    nn = neural_network.NeuralNetwork([2, 2], 1, 0.1, 1500)
+    nn = neural_network.NeuralNetwork([2, 2], 5, 0.1, 150)
     
 
     Y_pred = nn.forward(X_test)

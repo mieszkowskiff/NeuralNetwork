@@ -224,12 +224,12 @@ class NeuralNetwork:
         for j in range(self.number_of_epochs):
             if j%10==0 :
                 print("Epoch #", j)
-                print(self.cost(X_test, Y_test))
-                weight_progress.append(self.biases[0][1])
-                costs.append(self.cost(X_test, Y_test))
-            for i in range(len(X_train)):
+                print(self.cost(X_train, Y_train))
+                weight_progress.append(self.biases[0][1][0])
+                costs.append(self.cost(X_train, Y_train))
+            for i in range(X_train.shape[1]):
                 self.backward(X_train[:,i:i+1], Y_train[:,i:i+1])
-                if (i % self.batch_size == 0) or (i==len(X_train)-1):
+                if i % self.batch_size == self.batch_size - 1:
                     self.end_batch()
         return costs, weight_progress
         
