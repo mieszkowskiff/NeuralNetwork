@@ -20,7 +20,7 @@ if __name__ == "__main__":
     X_test, _, _ = neural_network.classification_data_normalization(X_test, mean, std)
     Y_train = neural_network.one_hot_encoding(Y_train)
 
-    nn = neural_network.NeuralNetwork([2, 2], 5, 0.1, 1500)
+    nn = neural_network.NeuralNetwork([2, 2], 1, 0.1, 1500)
     
 
     Y_pred = nn.forward(X_test)
@@ -28,13 +28,16 @@ if __name__ == "__main__":
     out = Y_pred + 2 * Y_test
     plt.scatter(X_test[0], X_test[1], c=out)
     plt.show()
-    print(nn.cost(X_test, Y_test))
 
-    costs = nn.perform_classification_training(X_train, Y_train, X_test, Y_test)
+    costs, weights = nn.perform_classification_training(X_train, Y_train, X_test, Y_test)
 
-    print(nn.cost(X_test, Y_test))
     plt.plot(costs)
     plt.show()
+
+    plt.plot(weights)
+    plt.show()
+
+
 
     Y_pred = nn.forward(X_test)
     Y_pred = neural_network.one_hot_decoding(Y_pred)

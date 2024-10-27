@@ -95,10 +95,10 @@ class NeuralNetwork:
 
         #self.activation = sigmoid
         #self.activation_derivative = sigmoid_derivative
-        self.activation = sigmoid
-        self.activation_derivative = sigmoid_derivative
-        self.last_layer_activation = sigmoid
-        self.last_layer_activation_derivative = sigmoid_matrix_derivative
+        self.activation = tanh
+        self.activation_derivative = tanh_derivative
+        self.last_layer_activation = softmax
+        self.last_layer_activation_derivative = softmax_derivative
 
         self.neurons = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
@@ -166,8 +166,8 @@ class NeuralNetwork:
         # weights_gradient/biases_gradient, objects storing the values of derivatives with respect to particular
         # NN parameters like weights or biases. Therefore weights_gradient is the same size as self.weights. Analogous
         # for biases. 
-        self.weights_gradient[0] = np.matmul(self.chain[0], input.T)
-        self.biases_gradient[0] = self.chain[0]
+        self.weights_gradient[0] += np.matmul(self.chain[0], input.T)
+        self.biases_gradient[0] += self.chain[0]
         for i in range(1, self.layers):
             # += operator is here for accumulating the back. prop. results from 
             # all instances appearing in the current batch 
@@ -220,16 +220,18 @@ class NeuralNetwork:
 
     def perform_classification_training(self, X_train, Y_train, X_test, Y_test):   
         costs = []
+        weight_progress = []
         for j in range(self.number_of_epochs):
             if j%10==0 :
                 print("Epoch #", j)
                 print(self.cost(X_test, Y_test))
+                weight_progress.append(self.biases[0][1])
                 costs.append(self.cost(X_test, Y_test))
             for i in range(len(X_train)):
                 self.backward(X_train[:,i:i+1], Y_train[:,i:i+1])
                 if (i % self.batch_size == 0) or (i==len(X_train)-1):
                     self.end_batch()
-        return costs
+        return costs, weight_progress
         
 
     
