@@ -10,6 +10,13 @@ def sigmoid(x):
 def sigmoid_derivative(x):
     return sigmoid(x) * (1 - sigmoid(x))
 
+def sigmoid_matrix_derivative(x):
+    temp = sigmoid_derivative(x)
+    m = np.zeros((len(temp), len(temp)))
+    np.fill_diagonal(m, temp)
+    return m
+
+
 def tanh(x):
     #return (np.exp(x)-np.exp(-x))/(np.exp(x)+np.exp(-x))
     return np.tanh(x)
@@ -17,8 +24,10 @@ def tanh(x):
 def tanh_derivative(x):
     return 1-pow(tanh(x), 2)
 
+
+
 def softmax(x, T = 1):
-    return np.exp(x/T) / np.sum(np.exp(x/T))
+    return np.exp(x/T) / np.sum(np.exp(x/T), axis=0)
 
 def softmax_derivative(x):
     temp = softmax(x)
@@ -86,10 +95,10 @@ class NeuralNetwork:
 
         #self.activation = sigmoid
         #self.activation_derivative = sigmoid_derivative
-        self.activation = tanh
-        self.activation_derivative = tanh_derivative
-        self.last_layer_activation = softmax
-        self.last_layer_activation_derivative = softmax_derivative
+        self.activation = sigmoid
+        self.activation_derivative = sigmoid_derivative
+        self.last_layer_activation = sigmoid
+        self.last_layer_activation_derivative = sigmoid_matrix_derivative
 
         self.neurons = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
@@ -127,7 +136,7 @@ class NeuralNetwork:
         return data
     
     def cost(self, input, output):
-        return SSE(self(input), output)
+        return np.sum((self.forward(input) - output)**2)
 
 
     def forward(self, input):
@@ -145,18 +154,14 @@ class NeuralNetwork:
         # this function prepares self.chain object which stores values of derivatives
         # with respect to particular neurons output (output before act. f.)
         self.forward(input)
-        self.assure_output(output)
         # SSE hardcoded here, cost function
         # still, math is correct in the line below
-        self.chain[-1] = np.matmul(self.last_layer_activation_derivative(self.neurons[-1]), (self.last_layer_activation(self.neurons[-1]) - output))
+        self.chain[-1] = np.matmul(self.last_layer_activation_derivative(self.neurons[-1]), self.last_layer_activation(self.neurons[-1]) - output)
         for i in range(self.layers - 2, -1, -1):
             # math in this line also seems to be correct
             self.chain[i] = np.matmul(self.weights[i + 1].T, self.chain[i + 1]) * self.activation_derivative(self.neurons[i])
     
     def backward(self, input, output):
-        self.assure_input(input)
-        self.assure_output(output)
-
         self.calculate_chain(input, output)
         # weights_gradient/biases_gradient, objects storing the values of derivatives with respect to particular
         # NN parameters like weights or biases. Therefore weights_gradient is the same size as self.weights. Analogous
@@ -213,13 +218,18 @@ class NeuralNetwork:
         #print(cost_10th_epoch)
 
 
-    def perform_classification_training(self, X_train, Y_train):
+    def perform_classification_training(self, X_train, Y_train, X_test, Y_test):   
+        costs = []
         for j in range(self.number_of_epochs):
-            print("Epoch #", j)
+            if j%10==0 :
+                print("Epoch #", j)
+                print(self.cost(X_test, Y_test))
+                costs.append(self.cost(X_test, Y_test))
             for i in range(len(X_train)):
                 self.backward(X_train[:,i:i+1], Y_train[:,i:i+1])
                 if (i % self.batch_size == 0) or (i==len(X_train)-1):
                     self.end_batch()
+        return costs
         
 
     

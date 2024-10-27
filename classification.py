@@ -2,10 +2,12 @@ import neural_network
 import read_data
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("TkAgg")
 
 
 if __name__ == "__main__":
-    np.random.seed(12)
+    np.random.seed(1)
     X_train, Y_train = read_data.read_data("./data/classification/data.simple.train.1000.csv", True)
     X_test, Y_test = read_data.read_data("./data/classification/data.simple.test.1000.csv", True)
 
@@ -18,15 +20,28 @@ if __name__ == "__main__":
     X_test, _, _ = neural_network.classification_data_normalization(X_test, mean, std)
     Y_train = neural_network.one_hot_encoding(Y_train)
 
-    nn = neural_network.NeuralNetwork([2,2, 2], 5, 0.5, 15000)
-    nn.perform_classification_training(X_train, Y_train)
+    nn = neural_network.NeuralNetwork([2, 2], 5, 0.1, 1500)
+    
 
-    Y_pred = np.array([nn.forward(X_test[:,i:i+1]) for i in range(X_test.shape[1])]).T.reshape(2, -1)
+    Y_pred = nn.forward(X_test)
     Y_pred = neural_network.one_hot_decoding(Y_pred)
     out = Y_pred + 2 * Y_test
-    print(out)
     plt.scatter(X_test[0], X_test[1], c=out)
-    plt.savefig("classification.png")
+    plt.show()
+    print(nn.cost(X_test, Y_test))
+
+    costs = nn.perform_classification_training(X_train, Y_train, X_test, Y_test)
+
+    print(nn.cost(X_test, Y_test))
+    plt.plot(costs)
+    plt.show()
+
+    Y_pred = nn.forward(X_test)
+    Y_pred = neural_network.one_hot_decoding(Y_pred)
+    out = Y_pred + 2 * Y_test
+
+    plt.scatter(X_test[0], X_test[1], c=out)
+    plt.show()
 
 
     
