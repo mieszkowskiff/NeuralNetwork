@@ -170,48 +170,27 @@ class NeuralNetwork:
         self.biases_gradient = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.batch_size_counter = 0
 
-    def perform_training(self, X_train, Y_train, X_test, Y_test, min_x, max_x, min_y, max_y, mean_x, mean_y):
-        X_len=len(X_train)
-        cost_10th_epoch=[]
-        for j in range(self.number_of_epochs):
-            if j%10==0 :
-                # data shuffle for every 10-th epoch to prevent feeding exactly the same batches
-                # in every epoch
-                X_train, Y_train = data_shuffle(X_train, Y_train)    
-                print("Epoch #", j)
-                # data_normalization2
-                cost_10th_epoch.append(SSE((self(((X_test-mean_x)/(max_x-min_x)).reshape(-1, 1, 1)).reshape(-1))*(max_y-min_y)+mean_y, Y_test))
-                print(SSE((self(((X_test-mean_x)/(max_x-min_x)).reshape(-1, 1, 1)).reshape(-1))*(max_y-min_y)+mean_y, Y_test))
-                '''
-                # previous normalization [0, 1]^2 
-                cost_10th_epoch.append(SSE((self(((X_test-min_x)/(max_x-min_x)).reshape(-1, 1, 1)).reshape(-1))*(max_y-min_y)+min_y, Y_test))
-                print(SSE((self(((X_test-min_x)/(max_x-min_x)).reshape(-1, 1, 1)).reshape(-1))*(max_y-min_y)+min_y, Y_test))
-                '''
-                print(self.weights[1][1][1])
-            
-            for i in range(X_len):
-                self.backward(np.array([[X_train[i]]]), np.array([[Y_train[i]]]))
-                # I guess last batch was not used at all in previous version if X_len
-                # was not divisible by batch_size since the if statement was false
-                if (i % self.batch_size == 0) or (i==X_len-1):
-                    self.end_batch()
-        #print("Table of cost function values in every 10-th epoch")
-        #print(cost_10th_epoch)
 
+    def perform_training(self, X_train, Y_train):
 
-    def perform_classification_training(self, X_train, Y_train):   
         costs = []
         weight_progress = []
+
         for j in range(self.number_of_epochs):
-            if j%10==0 :
+            if j%10==0:
+
                 print("Epoch #", j)
                 print(self.cost(X_train, Y_train))
+
                 weight_progress.append(self.biases[0][0][0])
                 costs.append(self.cost(X_train, Y_train))
+
             for i in range(X_train.shape[1]):
                 self.backward(X_train[:,i:i+1], Y_train[:,i:i+1])
+
                 if i % self.batch_size == self.batch_size - 1:
                     self.end_batch()
+
         return costs, weight_progress
     
     

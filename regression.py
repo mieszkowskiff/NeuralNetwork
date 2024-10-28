@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     nn = neural_network.NeuralNetwork([1, 3, 1], 5, 0.5, 150)
 
-    nn.perform_classification_training(X_train, Y_train)
+    nn.perform_training(X_train, Y_train)
 
     Y_pred = nn.forward(X_test)
     
