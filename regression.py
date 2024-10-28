@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 if __name__ == "__main__":
-    np.random.seed(56)
+    #np.random.seed(56)
     X_train, Y_train = read_data.read_data("./data/regression/data.activation.train.1000.csv", False)
     X_test, Y_test = read_data.read_data("./data/regression/data.activation.test.1000.csv", False)
     X_train = X_train.T
@@ -18,9 +18,8 @@ if __name__ == "__main__":
     ax.scatter(X_test, Y_test, s=1, c='r', label='Testing data')
     plt.legend()
     plt.title("Training and testing data")
+    ax.grid(True)
     plt.show()
-
-
     
     Y_train, min_y, max_y = neural_network.regression_data_normalization(Y_train)
     Y_test, _, _ = neural_network.regression_data_normalization(Y_test, x_min = min_y, x_max = max_y)
@@ -30,7 +29,7 @@ if __name__ == "__main__":
     
     X_train, Y_train = neural_network.data_shuffle(X_train, Y_train)
 
-    nn = neural_network.NeuralNetwork([1, 10, 10, 1], 5, 0.1, 150)
+    nn = neural_network.NeuralNetwork([1, 10, 10, 1], 5, 0.5, 300)
 
     cost, parameter_progress, parameter_gradient_progress = nn.perform_training(X_train, Y_train, X_test, Y_test)
 
@@ -41,7 +40,7 @@ if __name__ == "__main__":
     X_test = neural_network.classification_data_denormalization(X_test, mean_x, std_x)
 
     fig, ax = plt.subplots()
-    ax.scatter(range(len(cost) - 1), cost[1:], s=1, c='b', label='Cost')
+    ax.scatter(range(len(cost)), cost, s=1, c='b', label='Cost')
     plt.legend()
     plt.title("Cost function over epochs")
     ax.grid(True)

@@ -99,8 +99,8 @@ class NeuralNetwork:
 
         #self.activation = sigmoid
         #self.activation_derivative = sigmoid_derivative
-        self.activation = sigmoid
-        self.activation_derivative = sigmoid_derivative
+        self.activation = tanh
+        self.activation_derivative = tanh_derivative
         self.last_layer_activation = tanh
         self.last_layer_activation_derivative = tanh_matrix_derivative
 
@@ -209,10 +209,11 @@ class NeuralNetwork:
                 self.backward(X_train[:,i:i+1], Y_train[:,i:i+1])
 
                 if i % self.batch_size == self.batch_size - 1:
-                    parameter_gradient_progress.append(self.biases_gradient[0][0][0])
+                    parameter_gradient_progress.append(self.weights_gradient[0][0][0])
                     self.end_batch()
-                    parameter_progress.append(self.biases[0][0][0])
-                    costs.append(self.cost(X_test, Y_test))
+            parameter_progress.append(self.weights[0][0][0])
+            costs.append(self.cost(X_test, Y_test))
+            
 
         return costs, parameter_progress, parameter_gradient_progress
     
