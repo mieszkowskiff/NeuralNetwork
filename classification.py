@@ -2,23 +2,8 @@ import neural_network
 import read_data
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib
-import matplotlib.colors as mcolors
-matplotlib.use("TkAgg")
+from ploting import plot_classification
 
-def plot(X, out, classes = 2):
-    if classes == 2:
-        colors = ['blue', 'darkred', 'red', 'mediumblue']
-    if classes == 3:
-        colors = ['blue', 'darkred', 'red', 'firebrick', 'mediumblue', 'red', 'darkred', 'firebrick', 'royalblue']
-    cmap = mcolors.ListedColormap(colors)
-    plt.scatter(X[0], X[1], c=out, cmap=cmap)
-    legend_labels = np.unique(out)
-    handles = [plt.Line2D([0], [0], marker='o', color='w', label=f'{int(label)}', 
-                        markerfacecolor=color, markersize=10) 
-            for label, color in zip(legend_labels, colors)]
-    plt.legend(handles=handles, title='Out Values', loc='upper right')
-    plt.show()
 
 
 
@@ -37,31 +22,25 @@ if __name__ == "__main__":
     X_test, _, _ = neural_network.classification_data_normalization(X_test, mean, std)
     Y_train = neural_network.one_hot_encoding(Y_train)
 
-    nn = neural_network.NeuralNetwork([2, 10, 3], 5, 0.1, 20)
+    n_classes = Y_train.shape[0]
+    nn = neural_network.NeuralNetwork([2, 10, n_classes], 5, 0.1, 20)
     
 
     Y_pred = nn.forward(X_test)
     Y_pred = neural_network.one_hot_decoding(Y_pred)
     out = Y_pred + 3 * Y_test
 
-    plot(X_test, out, 3)
+    plot_classification(X_test, Y_test, n_classes)
     
 
-    costs, weights, weights_gradient = nn.perform_training(X_train, Y_train, X_test, Y_test)
-
-    plt.plot(costs)
-    plt.show()
-
-    plt.plot(weights)
-    plt.show()
-
+    costs, parameter, weights_gradient = nn.perform_training(X_train, Y_train, X_test, Y_test)
 
 
     Y_pred = nn.forward(X_test)
     Y_pred = neural_network.one_hot_decoding(Y_pred)
     out = Y_pred + 3 * Y_test
 
-    plot(X_test, out, 3)
+    plot_classification(X_test, out, n_classes * n_classes)
 
 
     
