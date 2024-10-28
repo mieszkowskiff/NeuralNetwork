@@ -14,8 +14,8 @@ if __name__ == "__main__":
     Y_test = Y_test.T
 
     fig, ax = plt.subplots()
-    ax.scatter(X_train, Y_train, c='b', label='Training data')
-    ax.scatter(X_test, Y_test, c='r', label='Testing data')
+    ax.scatter(X_train, Y_train, s=10, c='b', label='Training data')
+    ax.scatter(X_test, Y_test, s=1, c='r', label='Testing data')
     plt.legend()
     plt.title("Training and testing data")
     plt.show()
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     
     X_train, Y_train = neural_network.data_shuffle(X_train, Y_train)
 
-    nn = neural_network.NeuralNetwork([1, 3, 1], 5, 0.1, 150)
+    nn = neural_network.NeuralNetwork([1, 10, 10, 1], 5, 0.1, 150)
 
     cost, parameter_progress, parameter_gradient_progress = nn.perform_training(X_train, Y_train, X_test, Y_test)
 
@@ -41,30 +41,32 @@ if __name__ == "__main__":
     X_test = neural_network.classification_data_denormalization(X_test, mean_x, std_x)
 
     fig, ax = plt.subplots()
-    ax.scatter(range(len(cost) - 1), cost[1:], c='b', label='Cost')
+    ax.scatter(range(len(cost) - 1), cost[1:], s=1, c='b', label='Cost')
     plt.legend()
     plt.title("Cost function over epochs")
+    ax.grid(True)
     plt.show()
 
     fig, ax = plt.subplots()
-    ax.scatter(range(len(parameter_progress)), parameter_progress, c='b', label='Chosen parameter')
+    ax.scatter(range(len(parameter_progress)),parameter_progress, s=1, c='b', label='Chosen parameter')
     plt.legend()
     plt.title("Value of chosen parameter after each batch")
+    ax.grid(True)
     plt.show()
 
     fig, ax = plt.subplots()
-    ax.scatter(range(len(parameter_gradient_progress)), parameter_gradient_progress, c='b', label='Chosen parameter gradient')
+    ax.scatter(range(len(parameter_gradient_progress)), parameter_gradient_progress, s=1, c='b', label='Chosen parameter gradient')
     plt.legend()
     plt.title("Value of chosen parameter gradient after each batch")
+    ax.grid(True)
     plt.show()
 
-
-
     fig, ax = plt.subplots()
-    ax.scatter(X_test, Y_pred, c='b', label='Prediction')
-    ax.scatter(X_test, Y_test, c='r', label='True value')
+    ax.scatter(X_test, Y_pred, c='b', s=1,  label='Prediction')
+    ax.scatter(X_test, Y_test, c='r', s=1, label='True value')
     plt.title("Prediction vs True value")
     plt.legend()
+    ax.grid(True)
     plt.show()
 
 
