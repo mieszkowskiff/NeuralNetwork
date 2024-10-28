@@ -29,7 +29,7 @@ if __name__ == "__main__":
     plt.scatter(X_test[0], X_test[1], c=out)
     plt.show()
 
-    costs, weights = nn.perform_classification_training(X_train, Y_train, X_test, Y_test)
+    costs, weights = nn.perform_training(X_train, Y_train)
 
     plt.plot(costs)
     plt.show()
