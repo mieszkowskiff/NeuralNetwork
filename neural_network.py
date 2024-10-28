@@ -104,10 +104,10 @@ class NeuralNetwork:
 
         #self.activation = sigmoid
         #self.activation_derivative = sigmoid_derivative
-        self.activation = tanh
-        self.activation_derivative = tanh_derivative
-        self.last_layer_activation = tanh
-        self.last_layer_activation_derivative = tanh_matrix_derivative
+        self.activation = leaky_ReLU
+        self.activation_derivative = leaky_ReLU_derivative
+        self.last_layer_activation = softmax
+        self.last_layer_activation_derivative = softmax_matrix_derivative
 
         self.neurons = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
