@@ -61,6 +61,8 @@ def regression_data_normalization(x, l = -1, u = 1, x_min=None, x_max=None):
     x = (x - x_min) / (x_max - x_min)
     return x * (u - l) + l, x_min, x_max
 
+def regression_data_denormalization(x, x_min, x_max, l = -1, u = 1):
+    return (x - l) / (u - l) * (x_max - x_min) + x_min
 
 def classification_data_normalization(x, mean=None, std=None):
     if mean is None:
@@ -68,6 +70,9 @@ def classification_data_normalization(x, mean=None, std=None):
     if std is None:
         std = np.array([np.std(x, axis=1)]).T
     return (x - mean) / std, mean, std
+
+def classification_data_denormalization(x, mean, std):
+    return x * std + mean
 
 def one_hot_encoding(y):
     out = np.zeros((len(np.unique(y)), len(y)))
@@ -94,8 +99,8 @@ class NeuralNetwork:
 
         #self.activation = sigmoid
         #self.activation_derivative = sigmoid_derivative
-        self.activation = leaky_ReLU
-        self.activation_derivative = leaky_ReLU_derivative
+        self.activation = sigmoid
+        self.activation_derivative = sigmoid_derivative
         self.last_layer_activation = tanh
         self.last_layer_activation_derivative = tanh_matrix_derivative
 
@@ -187,27 +192,29 @@ class NeuralNetwork:
         self.batch_size_counter = 0
 
 
-    def perform_training(self, X_train, Y_train):
+    def perform_training(self, X_train, Y_train, X_test, Y_test):
 
         costs = []
-        weight_progress = []
+        parameter_progress = []
+        parameter_gradient_progress = []
 
         for j in range(self.number_of_epochs):
-            if j%10==0:
-
+            if j%10 == 0:
                 print("Epoch #", j)
-                print(self.cost(X_train, Y_train))
+                print(self.cost(X_test, Y_test))
 
-                weight_progress.append(self.biases[0][0][0])
-                costs.append(self.cost(X_train, Y_train))
+    
 
             for i in range(X_train.shape[1]):
                 self.backward(X_train[:,i:i+1], Y_train[:,i:i+1])
 
                 if i % self.batch_size == self.batch_size - 1:
+                    parameter_gradient_progress.append(self.biases_gradient[0][0][0])
                     self.end_batch()
+                    parameter_progress.append(self.biases[0][0][0])
+                    costs.append(self.cost(X_test, Y_test))
 
-        return costs, weight_progress
+        return costs, parameter_progress, parameter_gradient_progress
     
     
         
