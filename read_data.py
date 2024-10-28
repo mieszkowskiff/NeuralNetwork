@@ -10,4 +10,4 @@ def read_data(file_name, classification=False):
         data = np.array(list(csv_reader), dtype=np.float32)
     if classification:
         return data.T[0:2].T, data.T[2].T
-    return data.T[0].T, data.T[1].T
+    return data.T[0:1].T, data.T[1:2].T

@@ -6,7 +6,6 @@ import statistics as stat
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
-
 def sigmoid_derivative(x):
     return sigmoid(x) * (1 - sigmoid(x))
 
@@ -18,50 +17,34 @@ def sigmoid_matrix_derivative(x):
 
 
 def tanh(x):
-    #return (np.exp(x)-np.exp(-x))/(np.exp(x)+np.exp(-x))
     return np.tanh(x)
 
 def tanh_derivative(x):
     return 1-pow(tanh(x), 2)
 
-
+def tanh_matrix_derivative(x):
+    temp = tanh_derivative(x)
+    m = np.zeros((len(temp), len(temp)))
+    np.fill_diagonal(m, temp)
+    return m
 
 def softmax(x, T = 1):
     return np.exp(x/T) / np.sum(np.exp(x/T), axis=0)
 
-def softmax_derivative(x):
+def softmax_matrix_derivative(x):
     temp = softmax(x)
     m = -np.matmul(temp, temp.T)
     np.fill_diagonal(m, temp * (1 - temp))
     return m
 
+def regression_data_normalization(x, l = -1, u = 1, x_min=None, x_max=None):
+    if x_min is None:
+        x_min = np.min(x, axis=1)
+    if x_max is None:
+        x_max = np.max(x, axis=1)
+    x = (x - x_min) / (x_max - x_min)
+    return x * (u - l) + l, x_min, x_max
 
-def SSE(x, y):
-    return sum(pow(x-y,2))/pow(10, 5)
-
-def data_normalization(x, y):
-    min_x=np.min(x)
-    max_x=np.max(x)
-    min_y=np.min(y)
-    max_y=np.max(y)
-    x = (x - min_x) / (max_x - min_x)
-    y = (y - min_y) / (max_y - min_y)
-    return min_x, max_x, min_y, max_y, x, y
-
-def data_normalization2(x, y):
-    min_x=np.min(x)
-    max_x=np.max(x)
-    min_y=np.min(y)
-    max_y=np.max(y)
-
-    mean_x=stat.mean(x)
-    #std_x=stat.stdev(x)
-    mean_y=stat.mean(y)
-    #std_y=stat.stdev(y)
-
-    x = (x - mean_x) / (max_x - min_x)
-    y = (y - mean_y) / (max_y - min_y)
-    return min_x, max_x, min_y, max_y, mean_x, mean_y, x, y
 
 def classification_data_normalization(x, mean=None, std=None):
     if mean is None:
@@ -80,9 +63,9 @@ def one_hot_decoding(y):
     return np.argmax(y, axis=0)
 
 def data_shuffle(x, y):
-    permute = np.random.permutation(len(x))
-    x = x[permute]
-    y = y[permute]
+    permute = np.random.permutation(x.shape[1])
+    x = x[:,permute]
+    y = y[:,permute]
     return x, y
 
 class NeuralNetwork:
@@ -95,10 +78,10 @@ class NeuralNetwork:
 
         #self.activation = sigmoid
         #self.activation_derivative = sigmoid_derivative
-        self.activation = tanh
-        self.activation_derivative = tanh_derivative
-        self.last_layer_activation = softmax
-        self.last_layer_activation_derivative = softmax_derivative
+        self.activation = sigmoid
+        self.activation_derivative = sigmoid_derivative
+        self.last_layer_activation = tanh
+        self.last_layer_activation_derivative = tanh_matrix_derivative
 
         self.neurons = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
@@ -114,8 +97,6 @@ class NeuralNetwork:
         self.number_of_epochs=NUMBER_OF_EPOCHS
 
         self.early_stopping=EARLY_STOPPING
-
-
 
     def assure_input(self, input):
         assert type(input) is np.ndarray
@@ -218,20 +199,22 @@ class NeuralNetwork:
         #print(cost_10th_epoch)
 
 
-    def perform_classification_training(self, X_train, Y_train, X_test, Y_test):   
+    def perform_classification_training(self, X_train, Y_train):   
         costs = []
         weight_progress = []
         for j in range(self.number_of_epochs):
             if j%10==0 :
                 print("Epoch #", j)
                 print(self.cost(X_train, Y_train))
-                weight_progress.append(self.biases[0][1][0])
+                weight_progress.append(self.biases[0][0][0])
                 costs.append(self.cost(X_train, Y_train))
             for i in range(X_train.shape[1]):
                 self.backward(X_train[:,i:i+1], Y_train[:,i:i+1])
                 if i % self.batch_size == self.batch_size - 1:
                     self.end_batch()
         return costs, weight_progress
+    
+    
         
 
     
