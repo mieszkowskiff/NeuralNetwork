@@ -15,6 +15,23 @@ def sigmoid_matrix_derivative(x):
     np.fill_diagonal(m, temp)
     return m
 
+def leaky_ReLU(x):
+    return np.maximum(x, 0.5*x)
+
+def leaky_ReLU_derivative_lambda(x):
+    if x<=0:
+        return 0.5
+    else:
+        return 1
+
+def leaky_ReLU_derivative(x):
+    return np.array(list(map(leaky_ReLU_derivative_lambda, x))).reshape(-1, 1)
+
+def leaky_ReLU_matrix_derivative(x):
+    temp = leaky_ReLU_derivative(x)
+    m = np.zeros((len(temp), len(temp)))
+    np.fill_diagonal(m, temp)
+    return m
 
 def tanh(x):
     return np.tanh(x)
@@ -78,8 +95,8 @@ class NeuralNetwork:
 
         #self.activation = sigmoid
         #self.activation_derivative = sigmoid_derivative
-        self.activation = sigmoid
-        self.activation_derivative = sigmoid_derivative
+        self.activation = leaky_ReLU
+        self.activation_derivative = leaky_ReLU_derivative
         self.last_layer_activation = tanh
         self.last_layer_activation_derivative = tanh_matrix_derivative
 

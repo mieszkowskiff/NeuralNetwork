@@ -21,7 +21,7 @@ if __name__ == "__main__":
     
     X_train, Y_train = neural_network.data_shuffle(X_train, Y_train)
 
-    nn = neural_network.NeuralNetwork([1, 3, 1], 5, 0.5, 150)
+    nn = neural_network.NeuralNetwork([1, 10, 1], 5, 0.5, 150)
 
     nn.perform_training(X_train, Y_train)
 
