@@ -90,12 +90,17 @@ def data_shuffle(x, y):
     return x, y
 
 class NeuralNetwork:
-    def __init__(self, structure, BATCH_SIZE=10, LEARNING_RATE=0.5, NUMBER_OF_EPOCHS=100, EARLY_STOPPING=1):
+    def __init__(self, structure, BATCH_SIZE=10, LEARNING_RATE=0.5, NUMBER_OF_EPOCHS=100, biases_present = True):
         self.structure = np.array(structure)
         self.layers = self.structure.shape[0] - 1
 
+        self.biases_present = biases_present
+
         self.weights = [np.random.normal(0, 1/3, (self.structure[i + 1], self.structure[i])) for i in range(self.layers)]
-        self.biases = [np.random.normal(0, 1/3, (self.structure[i + 1], 1)) for i in range(self.layers)]
+        if self.biases_present:
+            self.biases = [np.random.normal(0, 1/3, (self.structure[i + 1], 1)) for i in range(self.layers)]
+        else:
+            self.biases = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
 
         #self.activation = sigmoid
         #self.activation_derivative = sigmoid_derivative
@@ -117,7 +122,6 @@ class NeuralNetwork:
 
         self.number_of_epochs=NUMBER_OF_EPOCHS
 
-        self.early_stopping=EARLY_STOPPING
 
     def assure_input(self, input):
         assert type(input) is np.ndarray
@@ -185,7 +189,8 @@ class NeuralNetwork:
             # (dividing by the number of instances in one batch) (???)
             # /self.batch_size
             self.weights[i] -= (self.weights_gradient[i]/self.batch_size) * self.learning_rate
-            self.biases[i] -= (self.biases_gradient[i]/self.batch_size) * self.learning_rate
+            if self.biases_present:
+                self.biases[i] -= (self.biases_gradient[i]/self.batch_size) * self.learning_rate
         
         self.weights_gradient = [np.zeros((self.structure[i + 1], self.structure[i])) for i in range(self.layers)]
         self.biases_gradient = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
