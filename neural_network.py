@@ -106,8 +106,8 @@ class NeuralNetwork:
         #self.activation_derivative = sigmoid_derivative
         self.activation = leaky_ReLU
         self.activation_derivative = leaky_ReLU_derivative
-        self.last_layer_activation = softmax
-        self.last_layer_activation_derivative = softmax_matrix_derivative
+        self.last_layer_activation = tanh
+        self.last_layer_activation_derivative = tanh_derivative
 
         self.neurons = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
@@ -162,7 +162,7 @@ class NeuralNetwork:
         self.forward(input)
         # SSE hardcoded here, cost function
         # still, math is correct in the line below
-        self.chain[-1] = np.matmul(self.last_layer_activation_derivative(self.neurons[-1]), self.last_layer_activation(self.neurons[-1]) - output)
+        self.chain[-1] = np.matmul(self.last_layer_activation_derivative(self.neurons[-1]),self.last_layer_activation(self.neurons[-1]) - output)
         for i in range(self.layers - 2, -1, -1):
             # math in this line also seems to be correct
             self.chain[i] = np.matmul(self.weights[i + 1].T, self.chain[i + 1]) * self.activation_derivative(self.neurons[i])

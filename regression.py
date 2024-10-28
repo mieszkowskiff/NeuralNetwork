@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 
 
 if __name__ == "__main__":
-    #np.random.seed(56)
-    X_train, Y_train = read_data.read_data("./data/regression/data.activation.train.1000.csv", False)
-    X_test, Y_test = read_data.read_data("./data/regression/data.activation.test.1000.csv", False)
+    np.random.seed(56)
+    X_train, Y_train = read_data.read_data("./data/regression/data.cube.train.10000.csv", False)
+    X_test, Y_test = read_data.read_data("./data/regression/data.cube.test.10000.csv", False)
     X_train = X_train.T
     Y_train = Y_train.T
     X_test = X_test.T
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     
     X_train, Y_train = neural_network.data_shuffle(X_train, Y_train)
 
-    nn = neural_network.NeuralNetwork([1, 10, 10, 1], 5, 0.5, 300)
+    nn = neural_network.NeuralNetwork([1, 3, 1], 5, 0.5, 20)
 
     cost, parameter_progress, parameter_gradient_progress = nn.perform_training(X_train, Y_train, X_test, Y_test)
 
@@ -39,6 +39,7 @@ if __name__ == "__main__":
     Y_test = neural_network.regression_data_denormalization(Y_test, min_y, max_y)
     X_test = neural_network.classification_data_denormalization(X_test, mean_x, std_x)
 
+    """
     fig, ax = plt.subplots()
     ax.scatter(range(len(cost)), cost, s=1, c='b', label='Cost')
     plt.legend()
@@ -59,6 +60,7 @@ if __name__ == "__main__":
     plt.title("Value of chosen parameter gradient after each batch")
     ax.grid(True)
     plt.show()
+    """
 
     fig, ax = plt.subplots()
     ax.scatter(X_test, Y_pred, c='b', s=1,  label='Prediction')
