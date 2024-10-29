@@ -83,10 +83,13 @@ def one_hot_encoding(y):
 def one_hot_decoding(y):
     return np.argmax(y, axis=0)
 
-def data_shuffle(x, y):
+def data_shuffle(x, y, classification=False):
     permute = np.random.permutation(x.shape[1])
     x = x[:,permute]
-    y = y[:,permute]
+    if classification:
+        y = y[permute]
+    else:
+        y = y[:,permute]
     return x, y
 
 class NeuralNetwork:
@@ -107,7 +110,7 @@ class NeuralNetwork:
         self.activation = leaky_ReLU
         self.activation_derivative = leaky_ReLU_derivative
         self.last_layer_activation = tanh
-        self.last_layer_activation_derivative = tanh_derivative
+        self.last_layer_activation_derivative = tanh_matrix_derivative
 
         self.neurons = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]

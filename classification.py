@@ -6,8 +6,6 @@ from ploting import plot_classification
 
 
 
-
-
 if __name__ == "__main__":
     np.random.seed(1)
     X_train, Y_train = read_data.read_data("./data/classification/data.three_gauss.train.1000.csv", True)
@@ -18,7 +16,7 @@ if __name__ == "__main__":
     X_test = X_test.T
     Y_test = Y_test - 1
 
-    X_train, Y_train = neural_network.data_shuffle(X_train, Y_train)
+    X_train, Y_train = neural_network.data_shuffle(X_train, Y_train, True)
     X_train, mean, std = neural_network.classification_data_normalization(X_train)
     X_test, _, _ = neural_network.classification_data_normalization(X_test, mean, std)
     Y_train = neural_network.one_hot_encoding(Y_train)
@@ -27,15 +25,9 @@ if __name__ == "__main__":
     nn = neural_network.NeuralNetwork([2, 10, 10, 10, n_classes], 5, 0.1, 20)
     
 
-    Y_pred = nn.forward(X_test)
-    Y_pred = neural_network.one_hot_decoding(Y_pred)
-    out = Y_pred + n_classes * Y_test
-
     plot_classification(X_test, Y_test, n_classes)
     
-
-    costs, parameter, weights_gradient = nn.perform_training(X_train, Y_train, X_test, Y_test)
-
+    costs, parameter, parameter_gradient = nn.perform_training(X_train, Y_train, X_test, Y_test)
 
     Y_pred = nn.forward(X_test)
     Y_pred = neural_network.one_hot_decoding(Y_pred)
