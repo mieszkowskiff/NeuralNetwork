@@ -39,29 +39,6 @@ if __name__ == "__main__":
     Y_test = neural_network.regression_data_denormalization(Y_test, min_y, max_y)
     X_test = neural_network.classification_data_denormalization(X_test, mean_x, std_x)
 
-    """
-    fig, ax = plt.subplots()
-    ax.scatter(range(len(cost)), cost, s=1, c='b', label='Cost')
-    plt.legend()
-    plt.title("Cost function over epochs")
-    ax.grid(True)
-    plt.show()
-
-    fig, ax = plt.subplots()
-    ax.scatter(range(len(parameter_progress)),parameter_progress, s=1, c='b', label='Chosen parameter')
-    plt.legend()
-    plt.title("Value of chosen parameter after each batch")
-    ax.grid(True)
-    plt.show()
-
-    fig, ax = plt.subplots()
-    ax.scatter(range(len(parameter_gradient_progress)), parameter_gradient_progress, s=1, c='b', label='Chosen parameter gradient')
-    plt.legend()
-    plt.title("Value of chosen parameter gradient after each batch")
-    ax.grid(True)
-    plt.show()
-    """
-
     fig, ax = plt.subplots()
     ax.scatter(X_test, Y_pred, c='b', s=1,  label='Prediction')
     ax.scatter(X_test, Y_test, c='r', s=1, label='True value')
