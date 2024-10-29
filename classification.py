@@ -24,10 +24,31 @@ if __name__ == "__main__":
     n_classes = Y_train.shape[0]
     nn = neural_network.NeuralNetwork([2, 10, 10, 10, n_classes], 5, 0.1, 20)
     
-
     plot_classification(X_test, Y_test, n_classes)
     
-    costs, parameter, parameter_gradient = nn.perform_training(X_train, Y_train, X_test, Y_test)
+    cost, parameter_progress, parameter_gradient_progress = nn.perform_training(X_train, Y_train, X_test, Y_test)
+
+    if False:
+        fig, ax = plt.subplots()
+        ax.scatter([i for i in range(len(cost))], cost, c='b', s=10,  label='Cost')
+        plt.title("Cost over epochs")
+        plt.legend()
+        ax.grid(True)
+        plt.show()
+
+        fig, ax = plt.subplots()
+        ax.scatter([i for i in range(len(parameter_progress))], parameter_progress, c='b', s=10,  label='parameter')
+        plt.title("Chosen parameter over epochs")
+        plt.legend()
+        ax.grid(True)
+        plt.show()
+
+        fig, ax = plt.subplots()
+        ax.scatter([i for i in range(len(parameter_gradient_progress))], parameter_gradient_progress, c='b', s=10,  label='parameter gradient')
+        plt.title("Chosen parameter gradient over epochs")
+        plt.legend()
+        ax.grid(True)
+        plt.show()
 
     Y_pred = nn.forward(X_test)
     Y_pred = neural_network.one_hot_decoding(Y_pred)

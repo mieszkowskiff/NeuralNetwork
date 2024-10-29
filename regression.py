@@ -33,6 +33,31 @@ if __name__ == "__main__":
 
     cost, parameter_progress, parameter_gradient_progress = nn.perform_training(X_train, Y_train, X_test, Y_test)
 
+
+    if False:
+        fig, ax = plt.subplots()
+        ax.scatter([i for i in range(len(cost))], cost, c='b', s=10,  label='Cost')
+        plt.title("Cost over epochs")
+        plt.legend()
+        ax.grid(True)
+        plt.show()
+
+        fig, ax = plt.subplots()
+        ax.scatter([i for i in range(len(parameter_progress))], parameter_progress, c='b', s=10,  label='parameter')
+        plt.title("Chosen parameter over epochs")
+        plt.legend()
+        ax.grid(True)
+        plt.show()
+
+        fig, ax = plt.subplots()
+        ax.scatter([i for i in range(len(parameter_gradient_progress))], parameter_gradient_progress, c='b', s=10,  label='parameter gradient')
+        plt.title("Chosen parameter gradient over epochs")
+        plt.legend()
+        ax.grid(True)
+        plt.show()
+
+    
+
     Y_pred = nn.forward(X_test)
 
     Y_pred = neural_network.regression_data_denormalization(Y_pred, min_y, max_y)
