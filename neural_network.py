@@ -17,13 +17,14 @@ def sigmoid_matrix_derivative(x):
 def leaky_ReLU(x):
     return np.maximum(x, 0.5*x)
 
-def leaky_ReLU_derivative_lambda(x):
-    if x<=0:
-        return 0.5
-    else:
-        return 1
+
 
 def leaky_ReLU_derivative(x):
+    def leaky_ReLU_derivative_lambda(x):
+        if x<=0:
+            return 0.5
+        else:
+            return 1
     return np.array(list(map(leaky_ReLU_derivative_lambda, x))).reshape(-1, 1)
 
 def leaky_ReLU_matrix_derivative(x):
