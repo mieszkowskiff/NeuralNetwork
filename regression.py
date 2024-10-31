@@ -1,4 +1,4 @@
-import neural_network
+import ai
 import read_data
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,15 +21,15 @@ if __name__ == "__main__":
     ax.grid(True)
     plt.show()
     
-    Y_train, min_y, max_y = neural_network.regression_data_normalization(Y_train)
-    Y_test, _, _ = neural_network.regression_data_normalization(Y_test, x_min = min_y, x_max = max_y)
+    Y_train, min_y, max_y = ai.regression_data_normalization(Y_train)
+    Y_test, _, _ = ai.regression_data_normalization(Y_test, x_min = min_y, x_max = max_y)
 
-    X_train, mean_x, std_x = neural_network.classification_data_normalization(X_train)
-    X_test, _, _ = neural_network.classification_data_normalization(X_test, mean_x, std_x)
+    X_train, mean_x, std_x = ai.classification_data_normalization(X_train)
+    X_test, _, _ = ai.classification_data_normalization(X_test, mean_x, std_x)
     
-    X_train, Y_train = neural_network.data_shuffle(X_train, Y_train)
+    X_train, Y_train = ai.data_shuffle(X_train, Y_train)
 
-    nn = neural_network.NeuralNetwork([1, 3, 1], 5, 0.5, 20)
+    nn = ai.NeuralNetwork([1, 3, 1], 5, 0.5, 20)
 
     cost, parameter_progress, parameter_gradient_progress = nn.perform_training(X_train, Y_train, X_test, Y_test)
 
@@ -60,9 +60,9 @@ if __name__ == "__main__":
 
     Y_pred = nn.forward(X_test)
 
-    Y_pred = neural_network.regression_data_denormalization(Y_pred, min_y, max_y)
-    Y_test = neural_network.regression_data_denormalization(Y_test, min_y, max_y)
-    X_test = neural_network.classification_data_denormalization(X_test, mean_x, std_x)
+    Y_pred = ai.regression_data_denormalization(Y_pred, min_y, max_y)
+    Y_test = ai.regression_data_denormalization(Y_test, min_y, max_y)
+    X_test = ai.classification_data_denormalization(X_test, mean_x, std_x)
 
     fig, ax = plt.subplots()
     ax.scatter(X_test, Y_pred, c='b', s=1,  label='Prediction')

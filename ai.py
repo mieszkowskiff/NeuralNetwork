@@ -56,9 +56,9 @@ def softmax_matrix_derivative(x):
 
 def regression_data_normalization(x, l = -1, u = 1, x_min=None, x_max=None):
     if x_min is None:
-        x_min = np.min(x, axis=1)
+        x_min = np.min(x, axis=1, keepdims=True)
     if x_max is None:
-        x_max = np.max(x, axis=1)
+        x_max = np.max(x, axis=1, keepdims=True)
     x = (x - x_min) / (x_max - x_min)
     return x * (u - l) + l, x_min, x_max
 
