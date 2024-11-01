@@ -76,25 +76,30 @@ def classification_data_denormalization(x, mean, std):
     return x * std + mean
 
 def one_hot_encoding(y):
-    out = np.zeros((len(np.unique(y)), len(y)))
-    for i in range(len(y)):
+    out = np.zeros((len(np.unique(y)), y.shape[0]))
+    for i in range(y.shape[0]):
         out[int(y[i]), i] = 1
     return out
 
 def one_hot_decoding(y):
     return np.argmax(y, axis=0)
 
-def data_shuffle(x, y, classification=False):
+def data_shuffle(x, y):
     permute = np.random.permutation(x.shape[1])
     x = x[:,permute]
-    if classification:
-        y = y[permute]
-    else:
-        y = y[:,permute]
+    y = y[:,permute]
     return x, y
 
 class NeuralNetwork:
-    def __init__(self, structure, BATCH_SIZE=10, LEARNING_RATE=0.5, NUMBER_OF_EPOCHS=100, biases_present = True):
+    def __init__(
+            self, 
+            structure, 
+            BATCH_SIZE = 10, 
+            LEARNING_RATE = 0.5, 
+            NUMBER_OF_EPOCHS = 100, 
+            biases_present = True, 
+            activation = 'leaky_ReLU',
+            last_layer_activation = 'softmax'):
         self.structure = np.array(structure)
         self.layers = self.structure.shape[0] - 1
 
@@ -106,12 +111,33 @@ class NeuralNetwork:
         else:
             self.biases = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
 
-        #self.activation = sigmoid
-        #self.activation_derivative = sigmoid_derivative
-        self.activation = leaky_ReLU
-        self.activation_derivative = leaky_ReLU_derivative
-        self.last_layer_activation = tanh
-        self.last_layer_activation_derivative = tanh_matrix_derivative
+        if activation == 'sigmoid':
+            self.activation = sigmoid
+            self.activation_derivative = sigmoid_derivative
+
+        elif activation == 'leaky_ReLU':
+            self.activation = leaky_ReLU
+            self.activation_derivative = leaky_ReLU_derivative
+
+        elif activation == 'tanh':
+            self.activation = tanh
+            self.activation_derivative = tanh_derivative
+
+        if last_layer_activation == 'softmax':
+            self.last_layer_activation = softmax
+            self.last_layer_activation_derivative = softmax_matrix_derivative
+        
+        elif last_layer_activation == 'tanh':
+            self.last_layer_activation = tanh
+            self.last_layer_activation_derivative = tanh_matrix_derivative
+
+        elif last_layer_activation == 'sigmoid':
+            self.last_layer_activation = sigmoid
+            self.last_layer_activation_derivative = sigmoid_matrix_derivative
+
+        elif last_layer_activation == 'leaky_ReLU':
+            self.last_layer_activation = leaky_ReLU
+            self.last_layer_activation_derivative = leaky_ReLU_matrix_derivative        
 
         self.neurons = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.chain = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
@@ -146,7 +172,7 @@ class NeuralNetwork:
         return data
     
     def cost(self, input, output):
-        return np.sum((self.forward(input) - output)**2)
+        return np.sum((self(input) - output)**2)
 
 
     def forward(self, input):
@@ -208,9 +234,9 @@ class NeuralNetwork:
         parameter_gradient_progress = []
 
         for j in range(self.number_of_epochs):
-            if j%10 == 0:
-                print("Epoch #", j)
-                print(self.cost(X_test, Y_test))
+            X_train, Y_train = data_shuffle(X_train, Y_train)
+            print("Epoch #", j)
+            print(self.calculate_accuracy(X_test, Y_test))
 
     
 
@@ -225,6 +251,11 @@ class NeuralNetwork:
             
 
         return costs, parameter_progress, parameter_gradient_progress
+    
+    def calculate_accuracy(self, X_test, Y_test):
+        Y_test = one_hot_decoding(Y_test)
+        Y_predicted = one_hot_decoding(self(X_test))
+        return np.sum(Y_test == Y_predicted) / Y_test.shape[0]
     
     
         
