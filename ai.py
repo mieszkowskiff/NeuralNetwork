@@ -94,9 +94,6 @@ class NeuralNetwork:
     def __init__(
             self, 
             structure, 
-            BATCH_SIZE = 10, 
-            LEARNING_RATE = 0.5, 
-            NUMBER_OF_EPOCHS = 100, 
             biases_present = True, 
             activation = 'leaky_ReLU',
             last_layer_activation = 'softmax'):
@@ -145,12 +142,7 @@ class NeuralNetwork:
         self.weights_gradient = [np.zeros((self.structure[i + 1], self.structure[i])) for i in range(self.layers)]
         self.biases_gradient = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
 
-        self.batch_size=BATCH_SIZE
         self.batch_size_counter = 0        #old batch_size variable, not used anywhere
-
-        self.learning_rate=LEARNING_RATE
-
-        self.number_of_epochs=NUMBER_OF_EPOCHS
 
 
     def assure_input(self, input):
@@ -214,26 +206,35 @@ class NeuralNetwork:
         
         self.batch_size_counter += 1
 
-    def end_batch(self):
+    def end_batch(self, learning_rate, batch_size):
         for i in range(self.layers):
             # (dividing by the number of instances in one batch) (???)
             # /self.batch_size
-            self.weights[i] -= (self.weights_gradient[i]/self.batch_size) * self.learning_rate
+            self.weights[i] -= (self.weights_gradient[i]/batch_size) * learning_rate
             if self.biases_present:
-                self.biases[i] -= (self.biases_gradient[i]/self.batch_size) * self.learning_rate
+                self.biases[i] -= (self.biases_gradient[i]/batch_size) * learning_rate
         
         self.weights_gradient = [np.zeros((self.structure[i + 1], self.structure[i])) for i in range(self.layers)]
         self.biases_gradient = [np.zeros((self.structure[i + 1], 1)) for i in range(self.layers)]
         self.batch_size_counter = 0
 
 
-    def perform_training(self, X_train, Y_train, X_test, Y_test):
+    def perform_training(
+            self, 
+            X_train, 
+            Y_train, 
+            X_test, 
+            Y_test,
+            batch_size = 10, 
+            learning_rate = 0.5, 
+            number_of_epochs = 100
+            ):
 
         costs = []
         parameter_progress = []
         parameter_gradient_progress = []
 
-        for j in range(self.number_of_epochs):
+        for j in range(number_of_epochs):
             X_train, Y_train = data_shuffle(X_train, Y_train)
             print("Epoch #", j)
             print(self.calculate_accuracy(X_test, Y_test))
@@ -243,9 +244,9 @@ class NeuralNetwork:
             for i in range(X_train.shape[1]):
                 self.backward(X_train[:,i:i+1], Y_train[:,i:i+1])
 
-                if i % self.batch_size == self.batch_size - 1:
+                if i % batch_size == batch_size - 1:
                     parameter_gradient_progress.append(self.weights_gradient[0][0][0])
-                    self.end_batch()
+                    self.end_batch(learning_rate = learning_rate, batch_size = batch_size)
             parameter_progress.append(self.weights[0][0][0])
             costs.append(self.cost(X_test, Y_test))
             

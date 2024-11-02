@@ -41,7 +41,7 @@ if __name__ == "__main__":
     print("Data shuffled.")
     print("Creating neural network...")
     
-    hidden_layer_size = 130
+    hidden_layer_size = 140
 
     nn = ai.NeuralNetwork(
         [
@@ -50,17 +50,33 @@ if __name__ == "__main__":
             hidden_layer_size, 
             Y_train.shape[0]
         ], 
-        BATCH_SIZE = 30, 
-        LEARNING_RATE = 0.1, 
-        NUMBER_OF_EPOCHS = 7, 
+
         activation = 'sigmoid', 
         last_layer_activation = 'softmax'
     )
     print("Neural network created.")
 
-    costs, parameter_progress, parameter_gradient_progress = nn.perform_training(X_train, Y_train, X_test, Y_test)
+    costs, parameter_progress, parameter_gradient_progress = nn.perform_training(
+        X_train, 
+        Y_train, 
+        X_test, 
+        Y_test,
+        batch_size = 30, 
+        learning_rate = 0.1, 
+        number_of_epochs = 7
+        )
+    print(nn.calculate_accuracy(X_test, Y_test))
+    costs, parameter_progress, parameter_gradient_progress = nn.perform_training(
+        X_train, 
+        Y_train, 
+        X_test, 
+        Y_test,
+        batch_size = 30, 
+        learning_rate = 0.01, 
+        number_of_epochs = 7
+        )
     print(nn.calculate_accuracy(X_test, Y_test))
     np.savez(f'./models/weights-{hidden_layer_size}.npz', *nn.weights)
-    np.savez(f'./models/biases-{hidden_layer_size}-.npz', *nn.biases)
+    np.savez(f'./models/biases-{hidden_layer_size}.npz', *nn.biases)
 
     
