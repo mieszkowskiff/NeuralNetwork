@@ -9,6 +9,14 @@ def plot_classification(X, out, classes = 4):
     if classes == 4:
         colors = ['blue', 'darkred', 'red', 'mediumblue']
         legend_labels = ["correct 0 0", "incorrect 0 1", "incorrect 1 0", "correct 1 1"]
+    if classes == 16:
+        colors = [
+            'blue', 'red', 'red', 'red',
+            'red', 'mediumblue', 'red', 'red',
+            'red', 'red', 'royalblue', 'red',
+            'red', 'red', 'red', 'blue'
+                   ]
+        legend_labels = []
     if classes == 3:
         colors = ['blue', 'green', 'red']
         legend_labels = ["class 0", "class 1", "class 2"]

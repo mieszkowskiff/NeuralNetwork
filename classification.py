@@ -8,8 +8,8 @@ from ploting import plot_classification
 
 if __name__ == "__main__":
     np.random.seed(1)
-    X_train, Y_train = read_data.read_data("./data/classification/data.three_gauss.train.1000.csv", True)
-    X_test, Y_test = read_data.read_data("./data/classification/data.three_gauss.test.1000.csv", True)
+    X_train, Y_train = read_data.read_data("./data/projekt1-oddanie/clasification/data.circles.train.1000.csv", True)
+    X_test, Y_test = read_data.read_data("./data/projekt1-oddanie/clasification/data.circles.test.1000.csv", True)
 
     X_train = X_train.T
     Y_train = Y_train - 1
@@ -22,9 +22,9 @@ if __name__ == "__main__":
     Y_train = neural_network.one_hot_encoding(Y_train)
 
     n_classes = Y_train.shape[0]
-    nn = neural_network.NeuralNetwork([2, 10, 10, 10, n_classes], 5, 0.1, 20)
+    nn = neural_network.NeuralNetwork([2, 10, 10, n_classes], 5, 0.1, 40)
     
-    plot_classification(X_test, Y_test, n_classes)
+    #plot_classification(X_test, Y_test, n_classes)
     
     cost, parameter_progress, parameter_gradient_progress = nn.perform_training(X_train, Y_train, X_test, Y_test)
 

@@ -108,8 +108,8 @@ class NeuralNetwork:
 
         #self.activation = sigmoid
         #self.activation_derivative = sigmoid_derivative
-        self.activation = leaky_ReLU
-        self.activation_derivative = leaky_ReLU_derivative
+        self.activation = tanh
+        self.activation_derivative = tanh_derivative
         self.last_layer_activation = tanh
         self.last_layer_activation_derivative = tanh_matrix_derivative
 

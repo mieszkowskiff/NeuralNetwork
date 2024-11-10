@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     np.random.seed(56)
-    X_train, Y_train = read_data.read_data("./data/regression/data.cube.train.10000.csv", False)
-    X_test, Y_test = read_data.read_data("./data/regression/data.cube.test.10000.csv", False)
+    X_train, Y_train = read_data.read_data("./data/projekt1/regression/data.cube.train.1000.csv", False)
+    X_test, Y_test = read_data.read_data("./data/projekt1/regression/data.cube.test.1000.csv", False)
     X_train = X_train.T
     Y_train = Y_train.T
     X_test = X_test.T
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     
     X_train, Y_train = neural_network.data_shuffle(X_train, Y_train)
 
-    nn = neural_network.NeuralNetwork([1, 3, 1], 5, 0.5, 20)
+    nn = neural_network.NeuralNetwork([1, 10, 1], 5, 0.5, 50)
 
     cost, parameter_progress, parameter_gradient_progress = nn.perform_training(X_train, Y_train, X_test, Y_test)
 
