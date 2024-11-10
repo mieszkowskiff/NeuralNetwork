@@ -1,0 +1,43 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+
+
+class HopfieldNet:
+    def __init__(self, n):
+        self.n = n
+        self.W = np.zeros((n, n), dtype=np.float32)
+
+    def hebb_training(self, X):
+        for x in X:
+            self.W += np.outer(x, x)
+        np.fill_diagonal(self.W, 0)
+        self.W /= self.n
+
+    def asynchronous_call(self, x):
+        for i in range(1000):
+            i = np.random.randint(0, self.n)
+            u = np.dot(self.W[i], x)
+            x[i] = np.sign(u)
+        return x
+    
+    def synchronous_call(self, x):
+        for i in range(1000):
+            u = np.dot(self.W, x)
+            x = np.sign(u)
+        return x
+
+    
+def display(x, width, height):
+    plt.imshow(x.reshape((width, height)), cmap='gray')
+    plt.show()
+    
+
+if __name__ == "__main__":
+    X = np.array([[1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1]])
+    display(X, 3, 4)    
+    net = HopfieldNet(12)
+    net.hebb_training(X) 
+    x = np.array([1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1])  
+    print(net.asynchronous_call(x))
