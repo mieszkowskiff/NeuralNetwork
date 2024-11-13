@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
+
 
 
 
@@ -29,15 +29,3 @@ class HopfieldNet:
         return x
 
     
-def display(x, width, height):
-    plt.imshow(x.reshape((width, height)), cmap='gray')
-    plt.show()
-    
-
-if __name__ == "__main__":
-    X = np.array([[1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1]])
-    display(X, 3, 4)    
-    net = HopfieldNet(12)
-    net.hebb_training(X) 
-    x = np.array([1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1])  
-    print(net.asynchronous_call(x))
