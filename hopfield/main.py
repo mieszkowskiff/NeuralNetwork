@@ -7,7 +7,7 @@ CONST_ACTIVATION_FUNCTIONS = ['signum', 'heavy_side']
 CONST_DYNAMICS_TYPE = ['asynchronous', 'synchronous']
 
 if __name__ == '__main__':
-    train, dims = read_csv.read_patterns('./data/hopfield/animals-14x9.csv')
+    train, dims = read_csv.read_patterns('./data/hopfield/letters-14x20.csv')
     num_of_patterns = train.shape[0]
     
     # display chosen training pattern
@@ -31,9 +31,9 @@ if __name__ == '__main__':
                                 dynamics = CONST_DYNAMICS_TYPE[dynamics])
     
     HN.training(train)
-    # display network weights after training 
-    # display.display(HN.W, [n, n])
+    #display network weights after training 
+    display.display(HN.W, [n, n])
 
-    init_x = train[4]
+    init_x = train[2]
     last_x = HN.forward(dims, init_x = init_x, epochs = 10, show_vis = 0)
     display.display(last_x, dims)

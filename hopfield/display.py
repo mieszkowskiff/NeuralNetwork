@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 def display(x, dims):
-    plt.imshow(x.reshape(dims[0], dims[1]), cmap='gray', norm='linear')
+    plt.imshow(x.reshape(dims[1], dims[0]), cmap='gray', norm='linear')
     plt.show()
 
 def user_choose_display(num_of_patterns):
