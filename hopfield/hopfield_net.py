@@ -23,10 +23,10 @@ class HopfieldNet:
             self.activation = heavy_side
 
     def HEBB_training(self, X):
-        for x in X:
+        for x in copy.deepcopy(X):
             self.W += np.outer(x, x)
         np.fill_diagonal(self.W, 0)
-        self.W /= self.n
+        self.W /= X.shape[0]
 
     def OJA_training(self, X):
         for x in X:
@@ -37,20 +37,20 @@ class HopfieldNet:
 
 
     def call(self, x):
-        if self.dynamics=='asynchronous':
-            for i in range(self.n):
-                u = np.dot(self.W[i], x)
-                x[i] = self.activation(u)
+        new_x = copy.deepcopy(x)
+        if self.dynamics == 'asynchronous':
+            for i in np.random.permutation(self.n):
+                u = np.dot(self.W[i], new_x)
+                new_x[i] = self.activation(u)
         elif self.dynamics=='synchronous':
-            u = np.dot(self.W, x)
-            x = self.activation(u)
-        return x
+            u = np.dot(self.W, new_x)
+            new_x = self.activation(u)
+        return new_x
 
     def forward(self, dims, init_x, epochs, animation = False):
         x = np.array(init_x)
         if animation:
             frames = [copy.deepcopy(x)]
-        display.display(x, dims)
         for j in range(epochs):
             x = self.call(x)
             if animation:
@@ -65,5 +65,4 @@ class HopfieldNet:
             anim = FuncAnimation(fig, update, frames=len(frames), blit=True)
             anim.save('animation.mp4', writer='ffmpeg', fps=1)
             plt.close('all')
-            print(frames)
         return x

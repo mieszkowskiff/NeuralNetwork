@@ -33,10 +33,8 @@ if __name__ == '__main__':
     )
     
     HN.HEBB_training(train)
-    #display network weights after training 
-    # display.display(HN.W, [n, n])
 
     init_x = train[0]
-    # display.display(init_x, dims)
+
     last_x = HN.forward(dims, init_x = init_x, epochs = 10, animation = True)
     display.display(last_x, dims)
