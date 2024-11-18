@@ -63,6 +63,6 @@ class HopfieldNet:
                 image.set_data(frames[frame].reshape(dims[1], dims[0]))
                 return [image]
             anim = FuncAnimation(fig, update, frames=len(frames), blit=True)
-            anim.save('animation.mp4', writer='ffmpeg', fps=1)
+            anim.save('animation.gif', writer='pillow', fps=1)
             plt.close('all')
         return x
