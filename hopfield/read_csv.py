@@ -25,3 +25,19 @@ def read_patterns(csv_file_path):
         for row in csv_reader:
             rows.append(np.array([int(x) for x in row]))
     return np.array(rows), dims
+
+def noise(example, noise_level = 0.01):
+    """
+    Add noise to an example.
+    """
+
+    # Copy the example to avoid modifying the original
+    example = np.copy(example)
+
+    # Generate random indices
+    indices = np.random.choice(range(len(example)), int(noise_level * len(example)), replace=False)
+
+    # Flip the bits at the random indices
+    example[indices] = -example[indices]
+
+    return example
