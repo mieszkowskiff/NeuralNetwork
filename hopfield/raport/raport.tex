@@ -1,0 +1,33 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{Sieci Neuronowe, projekt II - Sieci Hopfielda}
+\author{Filip Mieszkowski, Stanisław Kurzątkowski}
+\date{November 2024}
+\usepackage[T1]{fontenc}
+\begin{document}
+
+\maketitle
+
+\section{Wstęp}
+Celem tego projektu było zaimplementowanie sieci Hopfielda, której zadaniem jest rozpoznawanie wzorców. 
+Sieć Hopfielda jest jedną z najstarszych sieci neuronowych, została zaproponowana przez Johna Hopfielda w 1982 roku. 
+
+\subsection{Budowa sieci}
+Sieć składa się z $n$ neuronów, każdy z tych neuronów jest połączony z każdym innym neuonem wagą. 
+Stan każdego neuronu może przyjmować tylko dwie wartości, -1 lub 1.
+Wagę pomiędzy neuronami $i$ i $j$ będziemy oznaczali jako $w_{ij}$.
+Wagi te są symetryczne, co oznacza, że $w_{ij} = w_{ji}$. 
+Dodatkowo, waga $w_{ii}$ jest równa 0, co oznacza, że neuron nie jest połączony z samym sobą.
+Wagi sieci będziemy przechowywać w macierzy wag $W$, gdzie $W = [w_{ij}]$.
+Z wymienionych powyżej własności wynika, że macierz wag jest symetryczna oraz posiada na przekątnej same zera.
+
+
+\subsection{Cel sieci}
+Sieć Hopfielda jest siecią asocjacyjną, co oznacza, że jest w stanie zapamiętać wiele wzorców i potrafi je rozpoznać, 
+nawet jeśli są one zaszumione. Wzorce te są przechowywane w macierzy wag, która jest obliczana na podstawie wzorców uczących.
+
+
+\section{}
+ 
+\end{document}

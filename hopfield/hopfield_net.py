@@ -35,7 +35,7 @@ class HopfieldNet:
         self.b *= 1
 
     # eta usually from range [0.7, 0.9] (???)
-    def OJA_training(self, X, training_epochs = 10, eta = 0.0001):
+    def OJA_training(self, X, training_epochs = 10, eta = 0.01):
         self.HEBB_training(X)
         E = training_epochs
         M = X.shape[0]
