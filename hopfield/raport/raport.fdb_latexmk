@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1732358175.88639 "c:/Users/felip/Desktop/python/NeuralNetwork/hopfield/raport/raport.tex" "raport.pdf" "raport" 1732358176.46443 0
+["pdflatex"] 1732370020.43825 "c:/Users/felip/Desktop/python/NeuralNetwork/hopfield/raport/raport.tex" "raport.pdf" "raport" 1732370022.65623 0
   "C:/Users/felip/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1732316144 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/felip/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1200.pk" 1732316713 31952 aa37bc30f8f72dddd2fcaed90da0e392 ""
   "C:/Users/felip/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1440.pk" 1732316148 40136 7554189f38bb13e71e0e6cfd9d96e552 ""
@@ -46,9 +46,9 @@
   "C:/Users/felip/AppData/Local/Programs/MiKTeX/tex/latex/kvoptions/kvoptions.sty" 1656236481 22555 6d8e155cfef6d82c3d5c742fea7c992e ""
   "C:/Users/felip/AppData/Local/Programs/MiKTeX/tex/latex/kvsetkeys/kvsetkeys.sty" 1665066333 13815 760b0c02f691ea230f5359c4e1de23a7 ""
   "C:/Users/felip/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1708427688 30006 3d512c0edd558928ddea1690180ef77e ""
-  "c:/Users/felip/Desktop/python/NeuralNetwork/hopfield/raport/raport.tex" 1732317067 1487 acc26d727be99142fe4d22f51b62ada0 ""
-  "raport.aux" 1732358176 421 f74b99f87a513cf813958c792f3f3b0a "pdflatex"
-  "raport.tex" 1732317067 1487 acc26d727be99142fe4d22f51b62ada0 ""
+  "c:/Users/felip/Desktop/python/NeuralNetwork/hopfield/raport/raport.tex" 1732370015 1486 2374604fc296f69e21f7f4076e0f6d75 ""
+  "raport.aux" 1732370022 421 f74b99f87a513cf813958c792f3f3b0a "pdflatex"
+  "raport.tex" 1732370015 1486 2374604fc296f69e21f7f4076e0f6d75 ""
   (generated)
   "raport.aux"
   "raport.log"
