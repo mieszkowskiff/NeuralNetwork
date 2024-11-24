@@ -79,15 +79,17 @@ class HopfieldNet:
             x = self.activation(u)
         return x
 
-    def forward(self, dims, init_x, epochs, animation = False):
+    def forward(self, dims, init_x, max_epochs = 100, animation = False):
         x = np.array(init_x)
-        if animation:
-            frames = [copy.deepcopy(x)]
-        #display.display(x, dims)
-        for j in range(epochs):
+        frames = [copy.deepcopy(x)]
+        for j in range(max_epochs):
             x = self.call(x)
-            if animation:
-                frames.append(copy.deepcopy(x))
+            if np.array_equal(frames[-1], x):
+                print("Convergence reached in epoch: ", j)
+                break
+            frames.append(copy.deepcopy(x))
+        else:
+            print("Max epochs reached!!!!")
                 
         if animation:
             fig, ax = plt.subplots()

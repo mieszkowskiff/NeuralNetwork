@@ -7,7 +7,7 @@ def display(x, dims):
 def save_img(x, dims, save_as):
     #plt.imshow(x.reshape(dims[1], dims[0]), cmap='gray', norm='linear')
     fig, ax = plt.subplots()
-    ax.imshow(x.reshape(dims[1], dims[0]))
+    ax.imshow(x.reshape(dims[1], dims[0]), cmap='gray', norm='linear')
     fig.savefig(save_as)
 
 def user_choose_display(num_of_patterns):
