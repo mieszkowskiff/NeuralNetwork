@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 
+
 \title{Sieci Neuronowe, projekt II - Sieci Hopfielda}
 \author{Filip Mieszkowski, Stanisław Kurzątkowski}
 \date{November 2024}
@@ -86,10 +87,10 @@ W praktyce pomaga to uniknąć fałszywych minimów lokalnych, co zwiększa skut
 
 \section{Eksperymenty}
 W ramach projektu przeprowadziliśmy kilka eksperymentów, które miały na celu zbadanie skuteczności sieci Hopfielda.
-Kod źródłowy eksperymentów $1$ oraz $2$ znajduje się w pliku $eksperyment12.ipynb$.
+Kod źródłowy eksperymentów $1$ oraz $2$ znajduje się w pliku $eksperyment.py$.
 W zależności od dobranego ziarna losowości, wyniki mogą się nieznacznie różnić.
 
-\subsection{Eksperyment 1: rozpoznawanie wzorców zaszumionych}
+\subsection{Eksperyment 1: rozpoznawanie wzorców zaszumionych}\label{eksperyment1}
 W pierwszym eksperymencie sprawdziliśmy, jak uczenie Oja wpływa na skuteczność sieci.
 W tym celu stworzyliśmy sieć Hopfielda, która miała za zadanie rozpoznawać wzorce zaszumione.
 Sieć o $625$ neuronach została wyszkolona na $6$ wzorcach, a następnie testowana na wzorcach zaszumionych.
@@ -98,19 +99,19 @@ Zbiorem uczącym był zbiór $large-25x25$. Zwykłe uczenie Hebbowskie nie pozwa
 dwa zbiegły do minimów lokalnych, które nie były związane z żadnym z wzorców uczących.
 Poniżej prezentujemy te dwa źle rozpoznane wzorce uczące:
 \begin{center}
-    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/train/p2.png}
-    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/train/p4.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment12/train/p2.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment12/train/p4.png}
 \end{center}
 Po zaszumieniu wzorce te wyglądały następująco:
 \begin{center}
-    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/noise/n2.png}
-    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/noise/n4.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment12/noise/n2.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment12/noise/n4.png}
 \end{center}
 Po zaprezentowaniu sieci zaszumionych wzorców, sieć nie była w stanie ich rozpoznać, zbiegła
 do następujących minimów lokalnych:
 \begin{center}
-    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/hebb/h2.png}
-    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/hebb/h4.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment12/hebb/h2.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment12/hebb/h4.png}
 \end{center}
 Szczególnie przy pierwszym z tych minimów lokalnych, można zauważyć, że jest on swgo rodzaju "połączeniem" 
 obydwu wzorców uczących.
@@ -122,4 +123,117 @@ Po zastosowaniu uczenia Oja, sieć była w stanie rozpoznać wszystkie wzorce za
 Co również interesujące, po zastosowaniu uczenia Oja sieć zbiegała do do minimów lokalnych już w pierwszej iteracji
 (czyli po jednokrotnym zaktualizowaniu każdego neuronu), zaś w przypadku zwykłego uczenia Hebbowskiego wzorzec, który
 zbiegł do niepoprawnego minimum lokalnego zbiegł do niego po trzech iteracjach.
+
+\subsection{Eksperyment 3: rozpoznawanie liter alfabetu}
+W tym eksperymencie sprawdziliśmy, jak sieć Hopfielda radzi sobie z rozpoznawaniem liter alfabetu.
+W tym celu skorzystaliśmy z zbioru uczącego $letters-14x20$, który zawiera $26$ liter alfabetu.
+Sieć została wyszkolona na $26$ literach, a następnie testowana na literach zaszumionych.
+Zaszumienie polegało na zmianie $10\%$ losowo wybranych pikseli na przeciwną wartość.
+Minimum lokalne, do którego zbiegła sieć dla wszystkich zaszumionych liter w przypadku uczenia 
+Hebbowskiego wyglądało następująco:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment3/hebb/h1.png}
+\end{center}
+Z kolei w przypadku uczenia Oja, sieć zbiegła do dwóch następujących minimów lokalnych:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment3/oja/o1.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment3/oja/o23.png}
+\end{center}
+Jak widać, zarówno uczenie Hebbowskie jak i Oja nie pozwoliło na rozpoznanie liter zaszumionych.
+Prawdopodobnie wynika to z faktu, że obrazki liter alfabetu są ze sobą silnie skorelowane, 
+szczególnie, że w podanym zbiorze testowym wszystkie one znajdują się w lewym górnym rogu obrazka.
+Korelacja wzorców uczących stanowi dla sieci Hopfielda poważny problem, o czym można przeczytać na przykład
+w \cite{ref1}.
+
+\subsection{Eksperyment 4: porównanie podobnych zbiorów uczących}
+W tym eksperymencie uczyliśmy sieć Hopfielda na zbiorze $large-25x25$ oraz $large-25x50$.
+Są to niemalże te same wzorce, z tą różnicą, że w zbiorze $large-25x50$ dolna połowa każdego obrazka jest
+cała biała. Wyniki uczenia na zbiorze $large-25x25$ opisaliśmy w rozdziale \ref{eksperyment1}.
+W przypadku uczenia na zbiorze $large-25x50$, sieć uczona metodą Hebbowską zupełnie soobie nie poradziła
+i zbiegła do minimów lokalnych, które nie były związane z żadnym z wzorców uczących, zaś wyglądały następująco:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment4/hebb/h1.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment4/hebb/h5.png}
+\end{center}
+Uczenie Oja dla odmiany pozwoliło na rozpoznanie wszystkich wzorców zaszumionych.
+Liczba iteracji równa była $30$, zaś $\eta = 0.000002$ (zauważmy, że $\eta$ jest mniejsza, niż w przypadku 
+zbioru $large-25x25$).
+
+\subsubsection{Wytłumaczenie wyników}
+Wyniki eksperymentów pokazują, że uczenie Oja jest znacznie bardziej skuteczne niż uczenie Hebbowskie.
+Rozważmy neuron należący do górnej części obrazka. W przypadku uczenia Hebbowskiego, neuron ten otrzymuje bardzo silny sygnał
+pochodzący z dolnej części obrazka (jest tam aż $625$ neuronów, które zawsze mają tę samą wartość). W przypadku tak silnego sygnału
+z dolnej części obrazka neuron staje się niewrażliwy na stosunkowo słaby sygnał z górnej części obrazka.
+W przypadku uczenia Oja, wagi są zmniejszane, sygnał jest korygowany, co pozwala na lepsze rozpoznanie wzorców zaszumionych.
+
+\subsection{Eksperyment 5: poszukiwanie oscylatora}
+
+\subsection{Eksperyment 6: duże obrazy}
+W tym eksperymencie sprawdziliśmy, jak sieć Hopfielda radzi sobie z dużymi obrazami.
+W tym celu wzięliśmy dwa obrazy kotów:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/photos/cat0.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/photos/cat1.png}
+\end{center}
+A następnie zamieniliśmy je na obrazy binarne:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment6/train/p1.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment6/train/p2.png}
+\end{center}
+Na których nastepnie wyszkoliliśmy sieć Hopfielda metodą Hebbowską. Ze względu na dużą liczbę neuronów
+nie przeprowadzaliśmy uczenia Oja, które byłoby zbyt kosztowne obliczeniowo.
+Niestety, sieć nie była w stanie rozpoznać zaszumionych obrazów kotów.
+Po zaszumieniu obu obrazów na $10\%$ sieć w obu przypadkach zbiegła do tego samego minimum lokalnego:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment6/hebb/h1.png}
+\end{center}
+
+\subsection{Eksperyment 7: Odzywskiwanie obrazu wyłącznie z szumu}
+Celem tego eksperymentu było sprawdzenie, jak sieć Hopfielda poradzi sobie z odzyskaniem obrazu z samego szumu.
+W tym celu przeprowadzilismy uczenie na zbiorze $animals-14x9$, zarówno metodą Hebbowską jak i Oja.
+Następnie podaliśmy sieci obrazy, na których znajdował się wyłącznie szum:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7a/noise/n1.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7a/noise/n2.png}
+\end{center}
+Wygenerowaliśmy $6$ takich obrazów. Zarówno w przypadku uczenia metodą Hebbowską jak i Oja,
+ w trzech przypadkach sieć zbiegła do następującego minimum lokalnego:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7a/hebb/h1.png}
+\end{center}
+Zaś w pozostałych trzech przypadkach sieć zbiegła do następującego minimum lokalnego:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7a/hebb/h5.png}
+\end{center}
+Widzimy zatem, że pomimo, że sieć nie była w stanie odzyskać obrazu z samego szumu, to zbiegła do 
+w zasadzie tego samego minimum lokalnego, jednakże z przeciwnym znakiem.
+Co również ciekawe, minimum to wygląda jak połączenie wzorców uczących.
+Taki sam eksperyment przeprowadziliśmy dla zbioru $large-25x25$, uzyskując następujące wyniki przy uczeniu Hebbowskim:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/hebb/h1.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/hebb/h2.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/hebb/h3.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/hebb/h4.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/hebb/h5.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/hebb/h6.png}
+\end{center}
+Zaś w przypadku uczenia metodą Oja:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/oja/o1.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/oja/o2.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/oja/o3.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/oja/o4.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/oja/o5.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment7b/oja/o6.png}
+\end{center}
+Widzimy zatem, że uczenie Oja pozwoliło na lepsze odzyskanie obrazu z samego szumu,
+w porównaniu do uczenia Hebbowskiego. 
+\begin{thebibliography}{9}
+
+    \bibitem{ref1}
+    Matthias Lowe
+    \textit{ON THE STORAGE CAPACITY OF HOPFIELD
+    MODELS WITH CORRELATED PATTERNS},
+    The Annals of Applied Probability, 1998
+\end{thebibliography}
 \end{document}
