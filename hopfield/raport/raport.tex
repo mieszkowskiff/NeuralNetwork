@@ -4,7 +4,7 @@
 
 \title{Sieci Neuronowe, projekt II - Sieci Hopfielda}
 \author{Filip Mieszkowski, Stanisław Kurzątkowski}
-\date{November 2024}
+\date{Listopad 2024}
 \usepackage[T1]{fontenc}
 \begin{document}
 
@@ -228,6 +228,20 @@ Zaś w przypadku uczenia metodą Oja:
 \end{center}
 Widzimy zatem, że uczenie Oja pozwoliło na lepsze odzyskanie obrazu z samego szumu,
 w porównaniu do uczenia Hebbowskiego. 
+
+\subsection{Eksperyment 8: Zapisanie możliwie wielu wzorców}
+W tym eksperymencie sprawdizliśmy, jak wiele wzorców jesteśmy w stani zapisać na sieci Hopfielda o
+$25$ nauronach (obrazki rozmairy $5$ na $5$). Ponieważ sieci Hopfielda są w stanie zapamiętywać 
+wzorce lepiej, kiedy są one niezależne, generowaliśmy próbki losowych obrazków, a następnie sprawdzaliśmy,
+czy sieć jest w stani się ich nauczyć (tzn czy po podaniu tego samego obrazu, co obraz uczący, sieć w nim pozostawała).
+W ten sposób udało nam się zapisać aż $5$ wzorców, które prezentujemy poniżej:
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment8/train/p1.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment8/train/p2.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment8/train/p3.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment8/train/p4.png}
+    \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment8/train/p5.png}
+\end{center}
 \begin{thebibliography}{9}
 
     \bibitem{ref1}
