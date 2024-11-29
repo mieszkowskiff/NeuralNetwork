@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1732454178.63214 "c:/Users/felip/Desktop/python/NeuralNetwork/hopfield/raport/raport.tex" "raport.pdf" "raport" 1732454180.90445 0
+["pdflatex"] 1732574017.37145 "c:/Users/felip/Desktop/python/NeuralNetwork/hopfield/raport/raport.tex" "raport.pdf" "raport" 1732574020.05041 0
   "../../data/hopfield/eksperyment12/hebb/h2.png" 1732445798 6702 7fc961fac7d1ea6d79cce88dec2aef94 ""
   "../../data/hopfield/eksperyment12/hebb/h4.png" 1732445798 6660 1e8c6d862e13abfb23b199eac1f122fd ""
   "../../data/hopfield/eksperyment12/noise/n2.png" 1732445796 7191 d04736e2d606d8a3903333199f0b2d03 ""
@@ -11,9 +11,9 @@
   "../../data/hopfield/eksperyment3/oja/o23.png" 1732445302 9530 b4000c53d91f07bd3240b52aae8a9884 ""
   "../../data/hopfield/eksperyment4/hebb/h1.png" 1732447461 6526 36498a83dfba972c970ea49640c3eb89 ""
   "../../data/hopfield/eksperyment4/hebb/h5.png" 1732447462 6526 36498a83dfba972c970ea49640c3eb89 ""
-  "../../data/hopfield/eksperyment6/hebb/h1.png" 1732453700 5387 759d242b7210363be6ef87938bad91c6 ""
-  "../../data/hopfield/eksperyment6/train/p1.png" 1732453696 5387 759d242b7210363be6ef87938bad91c6 ""
-  "../../data/hopfield/eksperyment6/train/p2.png" 1732453696 5400 f6d87d56be763e58de2541ba019f51e7 ""
+  "../../data/hopfield/eksperyment6/hebb/h1.png" 1732574014 16806 c6f0234eb1b06a1cec2ced74f1c262d9 ""
+  "../../data/hopfield/eksperyment6/train/p1.png" 1732573816 34441 973018879f70d8f0e01925175b00debd ""
+  "../../data/hopfield/eksperyment6/train/p2.png" 1732573816 19292 19c156744b1cebeaf5f9f477d0c16c2b ""
   "../../data/hopfield/eksperyment7a/hebb/h1.png" 1732451692 7593 08c401309e88bb92b3fd2a4b0fe601fd ""
   "../../data/hopfield/eksperyment7a/hebb/h5.png" 1732451692 7631 11bea99c3b0026efe4be0b11ed1b8814 ""
   "../../data/hopfield/eksperyment7a/noise/n1.png" 1732451692 8097 a3286b0d8ff327577346f366628fde85 ""
@@ -91,9 +91,9 @@
   "C:/Users/felip/AppData/Local/Programs/MiKTeX/tex/latex/kvoptions/kvoptions.sty" 1656236481 22555 6d8e155cfef6d82c3d5c742fea7c992e ""
   "C:/Users/felip/AppData/Local/Programs/MiKTeX/tex/latex/kvsetkeys/kvsetkeys.sty" 1665066333 13815 760b0c02f691ea230f5359c4e1de23a7 ""
   "C:/Users/felip/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1708427688 30006 3d512c0edd558928ddea1690180ef77e ""
-  "c:/Users/felip/Desktop/python/NeuralNetwork/hopfield/raport/raport.tex" 1732454177 17149 0c92cf0919fb084dcb087b9227348de4 ""
-  "raport.aux" 1732454180 2348 b559fd7ee8f55441f4d2af6182444880 "pdflatex"
-  "raport.tex" 1732454177 17149 0c92cf0919fb084dcb087b9227348de4 ""
+  "c:/Users/felip/Desktop/python/NeuralNetwork/hopfield/raport/raport.tex" 1732573731 18247 3fe3a566068422fa24ac5ee311d7a1ba ""
+  "raport.aux" 1732574019 2428 afd875e1df2b94d220173f3cbe52c516 "pdflatex"
+  "raport.tex" 1732573731 18247 3fe3a566068422fa24ac5ee311d7a1ba ""
   (generated)
   "raport.aux"
   "raport.log"

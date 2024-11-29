@@ -46,7 +46,9 @@ tzn jeżeli $h_i > b_{i}$ to $x_i = 1$, w przeciwnym wypadku $x_i = -1$,
 gdzie $b_{i}$ to próg aktywacji neuronu $i$. Proces ten powtarzamy dla wszystkich neuronów, aż do momentu, gdy stan sieci się ustabilizuje.
 Możemy tutaj skorzystać z dwóch rozwiązań: asynchronicznego oraz synchronicznego.
 W rozwiązaniu asynchronicznym przeprowadzamy opsiany wyżej proces dla każdego neuronu osobno,
-natomiast w rozwiązaniu synchronicznym dla wszystkich neuronów naraz.
+natomiast w rozwiązaniu synchronicznym dla wszystkich neuronów naraz. W przypadku 
+rozwiązania asynchronicznego neurony mają z góry ustaloną kolejść, w której są aktualizowane.
+Kolejność ta nie zmienia się w kolejnych iteracjach.
 
 
 \subsection{Uczenie Hebbowskie}
@@ -60,7 +62,7 @@ gdzie $x_i^{(\mu)}$ oznacza $i$-ty neuron $mu$-tego wzorca uczącego.
 Warto zauważyć, że wagi są symetryczne, a progi aktywacji są ustalane na podstawie średniej wartości neuronów w danym wzorcu.
 
 \subsection{Dlaczego uczenie Hebbowskie działa?}
-Zdefiniujmy funckję energii sieci Hopfielda jako:
+Zdefiniujmy funkcję energii sieci Hopfielda jako:
 $$E = -\frac{1}{2} \sum_{i=1}^{n} \sum_{j=1}^{n} w_{ij} x_i x_j + \sum_{i=1}^{n} b_i x_i$$
 gdzie $x_i$ to stan $i$-tego neuronu.
 Możemy zauważyć, że funkcja ta jest zdefiniowana w taki sposób, że dla każdego wzorca uczącego $x^{(\mu)}$ jest minimum lokalne.
@@ -166,9 +168,7 @@ pochodzący z dolnej części obrazka (jest tam aż $625$ neuronów, które zaws
 z dolnej części obrazka neuron staje się niewrażliwy na stosunkowo słaby sygnał z górnej części obrazka.
 W przypadku uczenia Oja, wagi są zmniejszane, sygnał jest korygowany, co pozwala na lepsze rozpoznanie wzorców zaszumionych.
 
-\subsection{Eksperyment 5: poszukiwanie oscylatora}
-
-\subsection{Eksperyment 6: duże obrazy}
+\subsection{Eksperyment 5: duże obrazy}
 W tym eksperymencie sprawdziliśmy, jak sieć Hopfielda radzi sobie z dużymi obrazami.
 W tym celu wzięliśmy dwa obrazy kotów:
 \begin{center}
@@ -188,7 +188,7 @@ Po zaszumieniu obu obrazów na $10\%$ sieć w obu przypadkach zbiegła do tego s
     \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment6/hebb/h1.png}
 \end{center}
 
-\subsection{Eksperyment 7: Odzywskiwanie obrazu wyłącznie z szumu}
+\subsection{Eksperyment 6: Odzywskiwanie obrazu wyłącznie z szumu}
 Celem tego eksperymentu było sprawdzenie, jak sieć Hopfielda poradzi sobie z odzyskaniem obrazu z samego szumu.
 W tym celu przeprowadzilismy uczenie na zbiorze $animals-14x9$, zarówno metodą Hebbowską jak i Oja.
 Następnie podaliśmy sieci obrazy, na których znajdował się wyłącznie szum:
@@ -229,7 +229,7 @@ Zaś w przypadku uczenia metodą Oja:
 Widzimy zatem, że uczenie Oja pozwoliło na lepsze odzyskanie obrazu z samego szumu,
 w porównaniu do uczenia Hebbowskiego. 
 
-\subsection{Eksperyment 8: Zapisanie możliwie wielu wzorców}
+\subsection{Eksperyment 7: Zapisanie możliwie wielu wzorców}
 W tym eksperymencie sprawdizliśmy, jak wiele wzorców jesteśmy w stani zapisać na sieci Hopfielda o
 $25$ nauronach (obrazki rozmairy $5$ na $5$). Ponieważ sieci Hopfielda są w stanie zapamiętywać 
 wzorce lepiej, kiedy są one niezależne, generowaliśmy próbki losowych obrazków, a następnie sprawdzaliśmy,
@@ -242,6 +242,22 @@ W ten sposób udało nam się zapisać aż $5$ wzorców, które prezentujemy pon
     \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment8/train/p4.png}
     \includegraphics[width=0.7\textwidth]{./../../data/hopfield/eksperyment8/train/p5.png}
 \end{center}
+
+\subsection{Inne eksperymenty}
+W ramach projektu przeprowadziliśmy również wiele innych eksperymentów, które nie zostały tu szczegółowo opisane.
+Najważniejszym z nich była nieudana próba znalezienia oscylatora w sieci Hopfielda.
+Był to również jedyny eksperyment, w którym testowaliśmy sieć Hopfielda w trybie synchronicznym.
+
+\section{Podsumowanie}
+W ramach projektu zaimplementowaliśmy sieć Hopfielda, która potrafiła rozpoznawać wzorce.
+Przeprowadziliśmy wiele eksperymentów, które pozwoliły nam zrozumieć, jak działa sieć Hopfielda.
+W większości eksperymentów porównywaliśmy uczenie Hebbowskie z uczeniem Oja.
+Wyniki eksperymentów pokazały, że uczenie Oja jest znacznie bardziej skuteczne niż uczenie Hebbowskie.
+Eksperymenty przeprowadzaliśmy na różnych zbiorach danych, z reguły nie większych niż $25$ na $25$ pikseli,
+jednakże w jednym eksperymencie sprawdziliśmy, jak sieć radzi sobie z dużymi obrazami.
+
+
+
 \begin{thebibliography}{9}
 
     \bibitem{ref1}

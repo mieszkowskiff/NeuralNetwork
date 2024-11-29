@@ -22,7 +22,7 @@ datasets = ["animals-14x9.csv",
 path = "./data/hopfield/eksperyment6/"
 
 
-train, dims = read_csv.read_patterns(path + "/../" + datasets[8])
+train, dims = read_csv.read_patterns(path + "/../" + datasets[7])
 num_of_patterns = train.shape[0]
 
 print("Data loaded. Number of patterns: ", num_of_patterns)
@@ -59,7 +59,7 @@ for i in range(num_of_patterns):
 
 print("Hebb data saved as .png.")
 
-
+"""
 HN2 = hopfield_net.HopfieldNet(
     n = n,
     activation = CONST_ACTIVATION_FUNCTIONS[activation],
@@ -71,3 +71,4 @@ for i in range(num_of_patterns):
     #wait = input()
     last_x = HN2.forward(dims, init_x = X[i], animation = False)
     display.save_img(last_x, dims, path + "oja/o" + str(i+1) + ".png")
+"""

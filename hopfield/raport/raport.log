@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.3.10)  24 NOV 2024 14:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.3.10)  25 NOV 2024 23:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -120,12 +120,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 {C:/Users/felip/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]
-Overfull \hbox (4.75894pt too wide) in paragraph at lines 93--93
+Overfull \hbox (4.75894pt too wide) in paragraph at lines 95--95
 []\T1/cmr/bx/n/12 Eksperyment 1: rozpoz-nawanie wzor-ców za-szu-mionych 
  []
 
 
-Overfull \hbox (13.07813pt too wide) in paragraph at lines 94--101
+Overfull \hbox (13.07813pt too wide) in paragraph at lines 96--103
 \T1/cmr/m/n/10 W pier-wszym ekspery-men-cie sprawdzil-i±my, jak ucze-nie Oja wpªywa na skuteczno±¢
  []
 
@@ -133,36 +133,36 @@ Overfull \hbox (13.07813pt too wide) in paragraph at lines 94--101
 <./../../data/hopfield/eksperyment12/train/p2.png, id=23, 462.528pt x 346.896pt>
 File: ./../../data/hopfield/eksperyment12/train/p2.png Graphic file (type png)
 <use ./../../data/hopfield/eksperyment12/train/p2.png>
-Package pdftex.def Info: ./../../data/hopfield/eksperyment12/train/p2.png  used on input line 102.
+Package pdftex.def Info: ./../../data/hopfield/eksperyment12/train/p2.png  used on input line 104.
 (pdftex.def)             Requested size: 241.49895pt x 181.12799pt.
 <./../../data/hopfield/eksperyment12/train/p4.png, id=25, 462.528pt x 346.896pt>
 File: ./../../data/hopfield/eksperyment12/train/p4.png Graphic file (type png)
 <use ./../../data/hopfield/eksperyment12/train/p4.png>
-Package pdftex.def Info: ./../../data/hopfield/eksperyment12/train/p4.png  used on input line 103.
+Package pdftex.def Info: ./../../data/hopfield/eksperyment12/train/p4.png  used on input line 105.
 (pdftex.def)             Requested size: 241.49895pt x 181.12799pt.
 <./../../data/hopfield/eksperyment12/noise/n2.png, id=26, 462.528pt x 346.896pt>
 File: ./../../data/hopfield/eksperyment12/noise/n2.png Graphic file (type png)
 <use ./../../data/hopfield/eksperyment12/noise/n2.png>
-Package pdftex.def Info: ./../../data/hopfield/eksperyment12/noise/n2.png  used on input line 107.
+Package pdftex.def Info: ./../../data/hopfield/eksperyment12/noise/n2.png  used on input line 109.
 (pdftex.def)             Requested size: 241.49895pt x 181.12799pt.
 <./../../data/hopfield/eksperyment12/noise/n4.png, id=27, 462.528pt x 346.896pt>
 File: ./../../data/hopfield/eksperyment12/noise/n4.png Graphic file (type png)
 <use ./../../data/hopfield/eksperyment12/noise/n4.png>
-Package pdftex.def Info: ./../../data/hopfield/eksperyment12/noise/n4.png  used on input line 108.
+Package pdftex.def Info: ./../../data/hopfield/eksperyment12/noise/n4.png  used on input line 110.
 (pdftex.def)             Requested size: 241.49895pt x 181.12799pt.
  [4 <./../../data/hopfield/eksperyment12/train/p2.png> <./../../data/hopfield/eksperyment12/train/p4.png>]
 <./../../data/hopfield/eksperyment12/hebb/h2.png, id=33, 462.528pt x 346.896pt>
 File: ./../../data/hopfield/eksperyment12/hebb/h2.png Graphic file (type png)
 <use ./../../data/hopfield/eksperyment12/hebb/h2.png>
-Package pdftex.def Info: ./../../data/hopfield/eksperyment12/hebb/h2.png  used on input line 113.
+Package pdftex.def Info: ./../../data/hopfield/eksperyment12/hebb/h2.png  used on input line 115.
 (pdftex.def)             Requested size: 241.49895pt x 181.12799pt.
 <./../../data/hopfield/eksperyment12/hebb/h4.png, id=34, 462.528pt x 346.896pt>
 File: ./../../data/hopfield/eksperyment12/hebb/h4.png Graphic file (type png)
 <use ./../../data/hopfield/eksperyment12/hebb/h4.png>
-Package pdftex.def Info: ./../../data/hopfield/eksperyment12/hebb/h4.png  used on input line 114.
+Package pdftex.def Info: ./../../data/hopfield/eksperyment12/hebb/h4.png  used on input line 116.
 (pdftex.def)             Requested size: 241.49895pt x 181.12799pt.
  [5 <./../../data/hopfield/eksperyment12/noise/n2.png> <./../../data/hopfield/eksperyment12/noise/n4.png>]
-Overfull \hbox (4.75894pt too wide) in paragraph at lines 118--118
+Overfull \hbox (4.75894pt too wide) in paragraph at lines 120--120
 []\T1/cmr/bx/n/12 Eksperyment 2: rozpoz-nawanie wzor-ców za-szu-mionych
  []
 
@@ -170,28 +170,28 @@ Overfull \hbox (4.75894pt too wide) in paragraph at lines 118--118
 <./../../data/hopfield/eksperyment3/hebb/h1.png, id=45, 462.528pt x 346.896pt>
 File: ./../../data/hopfield/eksperyment3/hebb/h1.png Graphic file (type png)
 <use ./../../data/hopfield/eksperyment3/hebb/h1.png>
-Package pdftex.def Info: ./../../data/hopfield/eksperyment3/hebb/h1.png  used on input line 135.
+Package pdftex.def Info: ./../../data/hopfield/eksperyment3/hebb/h1.png  used on input line 137.
 (pdftex.def)             Requested size: 241.49895pt x 181.12799pt.
 <./../../data/hopfield/eksperyment3/oja/o1.png, id=46, 462.528pt x 346.896pt>
 File: ./../../data/hopfield/eksperyment3/oja/o1.png Graphic file (type png)
 <use ./../../data/hopfield/eksperyment3/oja/o1.png>
-Package pdftex.def Info: ./../../data/hopfield/eksperyment3/oja/o1.png  used on input line 139.
+Package pdftex.def Info: ./../../data/hopfield/eksperyment3/oja/o1.png  used on input line 141.
 (pdftex.def)             Requested size: 241.49895pt x 181.12799pt.
 <./../../data/hopfield/eksperyment3/oja/o23.png, id=47, 462.528pt x 346.896pt>
 File: ./../../data/hopfield/eksperyment3/oja/o23.png Graphic file (type png)
 <use ./../../data/hopfield/eksperyment3/oja/o23.png>
-Package pdftex.def Info: ./../../data/hopfield/eksperyment3/oja/o23.png  used on input line 140.
+Package pdftex.def Info: ./../../data/hopfield/eksperyment3/oja/o23.png  used on input line 142.
 (pdftex.def)             Requested size: 241.49895pt x 181.12799pt.
  [7 <./../../data/hopfield/eksperyment3/hebb/h1.png> <./../../data/hopfield/eksperyment3/oja/o1.png>]
 <./../../data/hopfield/eksperyment4/hebb/h1.png, id=54, 462.528pt x 346.896pt>
 File: ./../../data/hopfield/eksperyment4/hebb/h1.png Graphic file (type png)
 <use ./../../data/hopfield/eksperyment4/hebb/h1.png>
-Package pdftex.def Info: ./../../data/hopfield/eksperyment4/hebb/h1.png  used on input line 155.
+Package pdftex.def Info: ./../../data/hopfield/eksperyment4/hebb/h1.png  used on input line 157.
 (pdftex.def)             Requested size: 241.49895pt x 181.12799pt.
 <./../../data/hopfield/eksperyment4/hebb/h5.png, id=55, 462.528pt x 346.896pt>
 File: ./../../data/hopfield/eksperyment4/hebb/h5.png Graphic file (type png)
 <use ./../../data/hopfield/eksperyment4/hebb/h5.png>
-Package pdftex.def Info: ./../../data/hopfield/eksperyment4/hebb/h5.png  used on input line 156.
+Package pdftex.def Info: ./../../data/hopfield/eksperyment4/hebb/h5.png  used on input line 158.
 (pdftex.def)             Requested size: 241.49895pt x 181.12799pt.
  [8 <./../../data/hopfield/eksperyment3/oja/o23.png>] [9 <./../../data/hopfield/eksperyment4/hebb/h1.png> <./../../data/hopfield/eksperyment4/hebb/h5.png>]
 <./../../data/hopfield/photos/cat0.png, id=66, 204.765pt x 192.72pt>
@@ -343,11 +343,11 @@ Here is how much of TeX's memory you used:
  24693 multiletter control sequences out of 15000+600000
  566881 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 61i,6n,69p,257b,229s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 61i,6n,69p,257b,199s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\felip\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\felip\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\felip\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\felip\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\felip\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\felip\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\felip\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk><C:/Users/felip/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/felip/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/felip/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/felip/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/felip/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/felip/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/felip/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on raport.pdf (21 pages, 465975 bytes).
+Output written on raport.pdf (21 pages, 505887 bytes).
 PDF statistics:
- 433 PDF objects out of 1000 (max. 8388607)
+ 442 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  186 words of extra memory for PDF output out of 10000 (max. 10000000)
 
